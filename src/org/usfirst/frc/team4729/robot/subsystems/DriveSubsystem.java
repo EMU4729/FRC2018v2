@@ -3,6 +3,10 @@ package org.usfirst.frc.team4729.robot.subsystems;
 import org.usfirst.frc.team4729.robot.Robot;
 
 
+
+import org.usfirst.frc.team4729.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -117,8 +121,9 @@ public class DriveSubsystem extends Subsystem {
         power (leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
     }
     
-    public void updateEncoders () {
-    	
+    public void resetEncoders () {
+    	leftEncoder.reset ();
+    	rightEncoder.reset ();
     }
     
     public void power (double leftFront, double leftBack, double rightFront, double rightBack) {

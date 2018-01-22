@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
+import org.usfirst.frc.team4729.robot.commands.AutoCommand;
+import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 
 /**
@@ -19,24 +21,26 @@ import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static DriveSubsystem driveSubsystem;
-	public static OI oi;
+    public static DriveSubsystem driveSubsystem;
+    public static OI oi;
 
     Command autonomousCommand;
+    SmartDashboard smartDashboard;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	driveSubsystem = new DriveSubsystem();
-		oi = new OI();
+        driveSubsystem = new DriveSubsystem();
+        oi = new OI();
+        autonomousCommand = new AutoCommand ();
         // instantiate the command used for the autonomous period
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
+
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
@@ -51,14 +55,17 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
+        // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Joystick joystick = new Joystick (0);
-        OneStickArcade oneStickArcade = new OneStickArcade (joystick);
-        oneStickArcade.start ();
+
+        Joystick leftStick = new Joystick(0);
+        Joystick rightStick = new Joystick(1);
+        TwoStickArcade twoStickArcade = new TwoStickArcade(leftStick, rightStick);
+
+        twoStickArcade.start();
     }
 
     /**
@@ -75,7 +82,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */

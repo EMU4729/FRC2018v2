@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoCommand extends Command {
-
+	Command resetEncoders = new ResetEncoders ();
     Command moveForward;
     Command moveBackwards;
 
@@ -17,7 +17,7 @@ public class AutoCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.whatever(this.isNotWorking, pleaseHelp);
+    	resetEncoders.start ();
     }
 
     // Called repeatedly when this Command is scheduled to run

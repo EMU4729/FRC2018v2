@@ -1,33 +1,27 @@
 package org.usfirst.frc.team4729.robot.commands;
 
-import org.usfirst.frc.team4729.robot.Robot;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TwoStickTank extends Command {
-    Joystick leftStick;
-    Joystick rightStick;
-    public TwoStickTank(Joystick leftStick, Joystick rightStick) {
-        requires(Robot.driveSubsystem);
-        this.leftStick = leftStick;
-        this.rightStick = rightStick;
+public class AutoCommand extends Command {
+
+    Command moveForward;
+    Command moveBackwards;
+
+    public AutoCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        SmartDashboard.putString("Drive Type", "2 Stick Tank");
+    	Robot.driveSubsystem.whatever(this.isNotWorking, pleaseHelp);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.driveSubsystem.tank(leftStick.getY(), rightStick.getY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -10,30 +10,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class OneStickArcade extends Command {
-	Joystick stick;
-	int counter;
+    Joystick stick;
     public OneStickArcade(Joystick stick) {
-    	requires(Robot.driveSubsystem);
-    	this.stick = stick;
+        requires(Robot.driveSubsystem);
+        this.stick = stick;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	SmartDashboard.putString("Drive Type", "1 Stick Arcade");
-    	counter = 0;
+        SmartDashboard.putString("Drive Type", "1 Stick Arcade");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.arcade(stick.getY(), stick.getX());
-    	SmartDashboard.putNumber ("Distance", Robot.driveSubsystem.getDistance ());
-    	SmartDashboard.putNumber ("Rate", Robot.driveSubsystem.getRate ());
-//    	System.out.println ("Distance: " + Robot.driveSubsystem.getDistance ());
-//    	System.out.println ("Rate: " + Robot.driveSubsystem.getRate ());
-//    	System.out.println (counter);
-    	counter++;
+        Robot.driveSubsystem.arcade(stick.getY(), stick.getX());
     }
 
     // Make this return true when this Command no longer needs to run execute()

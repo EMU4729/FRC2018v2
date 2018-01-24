@@ -5,12 +5,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
+
 public class TwoStickArcade extends Command {
     Joystick leftStick;
     Joystick rightStick;
+    
     public TwoStickArcade(Joystick leftStick, Joystick rightStick) {
         requires(Robot.driveSubsystem);
         this.leftStick = leftStick;
@@ -27,6 +26,9 @@ public class TwoStickArcade extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         Robot.driveSubsystem.arcade(leftStick.getY(), rightStick.getX());
+        Robot.driveSubsystem.updateEncoders();
+        SmartDashboard.putNumber("Testing Endoders: Left", DriveSubsystem.leftEncoderFunc());
+        SmartDashboard.putNumber("Testing Endoders: Right", DriveSubsystem.rightEncoderFunc());        
     }
 
     // Make this return true when this Command no longer needs to run execute()

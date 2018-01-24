@@ -2,10 +2,6 @@ package org.usfirst.frc.team4729.robot.subsystems;
 
 import org.usfirst.frc.team4729.robot.Robot;
 
-
-
-import org.usfirst.frc.team4729.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,6 +47,14 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.setMinRate(10);
     	rightEncoder.setDistancePerPulse(5);
     	rightEncoder.setSamplesToAverage(7);
+    }
+    
+    public void leftEncoderFunc() { //func = function
+    	return leftEncoder.getDistance();
+    }
+    
+    public void rightEncoderFunc() {
+    	return rightEncoder.getDirection();
     }
 
     public void initDefaultCommand() {
@@ -121,9 +125,8 @@ public class DriveSubsystem extends Subsystem {
         power (leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
     }
     
-    public void resetEncoders () {
-    	leftEncoder.reset ();
-    	rightEncoder.reset ();
+    public void updateEncoders () {
+    	
     }
     
     public void power (double leftFront, double leftBack, double rightFront, double rightBack) {

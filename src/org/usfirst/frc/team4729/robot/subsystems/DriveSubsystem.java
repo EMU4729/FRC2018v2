@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4729.robot.subsystems;
 
 import org.usfirst.frc.team4729.robot.Robot;
+import org.usfirst.frc.team4729.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,19 +43,11 @@ public class DriveSubsystem extends Subsystem {
     	leftEncoder.setMinRate(10);
     	leftEncoder.setDistancePerPulse(5);
     	leftEncoder.setSamplesToAverage(7);
-    	rightEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, RobotMap.ENCODER_LEFT_INDEX);
+    	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, RobotMap.ENCODER_RIGHT_INDEX);
     	rightEncoder.setMaxPeriod(0.1);
     	rightEncoder.setMinRate(10);
     	rightEncoder.setDistancePerPulse(5);
     	rightEncoder.setSamplesToAverage(7);
-    }
-    
-    public void leftEncoderFunc() { //func = function
-    	return leftEncoder.getDistance();
-    }
-    
-    public void rightEncoderFunc() {
-    	return rightEncoder.getDistance();
     }
 
     public void initDefaultCommand() {
@@ -125,8 +118,17 @@ public class DriveSubsystem extends Subsystem {
         power (leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
     }
     
-    public void updateEncoders () {
-    	
+    public double getLeftEncoder() {
+    	return leftEncoder.getDistance();
+    }
+    
+    public double getRightEncoder() {
+    	return rightEncoder.getDistance();
+    }
+    
+    public void resetEncoders () {
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     }
     
     public void power (double leftFront, double leftBack, double rightFront, double rightBack) {

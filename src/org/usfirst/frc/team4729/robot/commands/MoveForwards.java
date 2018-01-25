@@ -1,35 +1,39 @@
 package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
-import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoCommand extends Command {
-    Command moveForwards = new MoveForwards ();
+public class MoveForwards extends Command {
+	Timer timer = new Timer ();
 
-    public AutoCommand() {
+    public MoveForwards() {
+    	requires(Robot.driveSubsystem);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveSubsystem);
     }
 
-	// Called just before this Command runs the first time
+    // Called just before this Command runs the first time
     protected void initialize() {
-    	new ResetEncoders ();
+    	Robot.driveSubsystem.arcade(1, 0);
+    	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        if (timer.hasPeriodPassed(1.5)) {
+        	return true;
+        } else {
+        	return false;
+        }
     }
 
     // Called once after isFinished returns true

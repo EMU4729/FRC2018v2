@@ -17,6 +17,9 @@ public class AutoCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
+    	String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
     }
 
 	// Called just before this Command runs the first time
@@ -26,7 +29,12 @@ public class AutoCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.tank(0, 0);    		
+    	if(gameData.charAt(0) == 'L')
+		{
+    		Robot.driveSubsystem.tank(1, 0);
+		} else {
+			Robot.driveSubsystem.tank(0, 1);
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()

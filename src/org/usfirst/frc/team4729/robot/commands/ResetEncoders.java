@@ -12,11 +12,11 @@ public class ResetEncoders extends Command {
     public ResetEncoders() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	Robot.driveSubsystem.resetEncoders ();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.resetEncoders ();
     }
 
     // Called repeatedly when this Command is scheduled to run

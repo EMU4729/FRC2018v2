@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4729.robot.commands.AutoCommand;
+import org.usfirst.frc.team4729.robot.commands.Auto;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 
@@ -34,7 +34,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
-        autonomousCommand = new AutoCommand ();
+        autonomousCommand = new Auto ();
+        SmartDashboard.putString("Auto Type", "forwards 2");
         // instantiate the command used for the autonomous period
     }
 

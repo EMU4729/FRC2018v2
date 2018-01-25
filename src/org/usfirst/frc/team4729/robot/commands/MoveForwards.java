@@ -4,22 +4,28 @@ import org.usfirst.frc.team4729.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class MoveForwards extends Command {
-	Timer timer = new Timer ();
+	Timer timer;
+	double time;
+	double speed;
 
-    public MoveForwards() {
+    public MoveForwards(double t) {
     	requires(Robot.driveSubsystem);
+    	timer = new Timer ();
+    	time = t;
+    	speed = 100;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.arcade(1, 0);
+    	Robot.driveSubsystem.arcade(speed, 0);
     	timer.start();
     }
 
@@ -29,7 +35,8 @@ public class MoveForwards extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (timer.hasPeriodPassed(1.5)) {
+        if (timer.hasPeriodPassed(time)) {
+        	Robot.driveSubsystem.arcade(0, 0);
         	return true;
         } else {
         	return false;

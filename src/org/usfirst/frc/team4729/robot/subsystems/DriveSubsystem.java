@@ -132,8 +132,8 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void power (double leftFront, double leftBack, double rightFront, double rightBack) {
-    	leftFrontDrive.set(ControlMode.PercentOutput, leftFront);
-        leftBackDrive.set(ControlMode.PercentOutput, leftBack);
+    	leftFrontDrive.set(ControlMode.PercentOutput, -leftFront);
+        leftBackDrive.set(ControlMode.PercentOutput, -leftBack);
         rightFrontDrive.set(ControlMode.PercentOutput, rightFront);
         rightBackDrive.set(ControlMode.PercentOutput, rightBack);
     }

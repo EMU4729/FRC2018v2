@@ -9,7 +9,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto extends CommandGroup {
 
     public Auto() {
-    	addSequential (new Auto ());
+    	String mode = SmartDashboard.getString("Auto Type", "forwards 2");
+    	
+    	switch (mode) {
+    	case "forwards 2":
+    		addSequential (new MoveForwards (2));
+    		break;
+    	case "forwards 4":
+    		addSequential (new MoveForwards (4));
+    		break;
+    	}
     	
 //    	if(gameData.charAt(0) == 'L')
 //		{

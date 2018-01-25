@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
-        autonomousCommand = new Auto ();
         SmartDashboard.putString("Auto Type", "forwards 2");
         // instantiate the command used for the autonomous period
     }
@@ -45,7 +44,8 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+    	autonomousCommand = new Auto ();
+        autonomousCommand.start();
     }
 
     /**

@@ -54,7 +54,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void rightEncoderFunc() {
-    	return rightEncoder.getDirection();
+    	return rightEncoder.getDistance();
     }
 
     public void initDefaultCommand() {

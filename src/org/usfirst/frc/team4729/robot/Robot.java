@@ -32,8 +32,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     Command driveType;
     SmartDashboard smartDashboard;
-    SendableChooser autonomousSelector;
-    SendableChooser driveModeSelector;
+    SendableChooser<Auto> autonomousSelector;
+    SendableChooser<Command> driveModeSelector;
     //CameraServer camera;
 
     /**
@@ -44,14 +44,14 @@ public class Robot extends IterativeRobot {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
         
-        autonomousSelector = new SendableChooser();
-        autonomousSelector.addDefault("Forward 2", new Auto(0));
-        autonomousSelector.addObject("Forward 4", new Auto(1));
+        autonomousSelector = new SendableChooser<Auto>();
+        autonomousSelector.addDefault("Forward 2", new Auto("Forward 2"));
+        autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
         SmartDashboard.putData("Auto Type", autonomousSelector);
         
         Joystick leftStick = new Joystick(0);
         Joystick rightStick = new Joystick(1);
-        driveModeSelector = new SendableChooser();
+        driveModeSelector = new SendableChooser<Command>();
         driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
         driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
         SmartDashboard.putData("Drive Type", driveModeSelector);
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand == null) autonomousCommand.cancel();
+        if (autonomousCommand != null) autonomousCommand.cancel();
         
         driveType = (Command) driveModeSelector.getSelected();
         /*

@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Auto extends CommandGroup {
 
-    public Auto() {
-    	String mode = SmartDashboard.getString("Auto Type", "forwards 2");
+    public Auto(int autoType) {
+    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
     	
-    	switch (mode) {
-    	case "forwards 2":
+    	switch (autoType) {
+    	case 0:
     		addSequential (new MoveForwards (2));
     		break;
-    	case "forwards 4":
+    	case 1:
     		addSequential (new MoveForwards (4));
     		break;
     	}

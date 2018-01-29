@@ -1,14 +1,18 @@
 
 package org.usfirst.frc.team4729.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4729.robot.commands.Auto;
+import org.usfirst.frc.team4729.robot.commands.MoveForwards;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 
@@ -26,6 +30,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SmartDashboard smartDashboard;
+    SendableChooser autonomousSelector;
+    //CameraServer camera;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,7 +40,14 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
-        SmartDashboard.putString("Auto Type", "forwards 2");
+        autonomousSelector = new SendableChooser();
+        autonomousSelector.addDefault("Forward 2", new Auto(0));
+        autonomousSelector.addObject("Forward 4", new Auto(1));
+        SmartDashboard.putData("Auto Type", autonomousSelector);
+        new Thread(() -> {
+	        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+	        camera.setResolution(640, 480);
+        }).start();
         // instantiate the command used for the autonomous period
     }
 
@@ -44,7 +57,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	autonomousCommand = new Auto ();
+    	autonomousCommand = (Command) autonomousSelector.getSelected();
         autonomousCommand.start();
     }
 

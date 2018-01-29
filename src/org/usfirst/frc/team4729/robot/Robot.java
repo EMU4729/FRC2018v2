@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4729.robot.commands.Auto;
 import org.usfirst.frc.team4729.robot.commands.MoveForwards;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
+import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 
 /**
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
     public static OI oi;
 
     Command autonomousCommand;
+    Command driveType;
     SmartDashboard smartDashboard;
     SendableChooser autonomousSelector;
     SendableChooser driveModeSelector;
@@ -47,9 +49,11 @@ public class Robot extends IterativeRobot {
         autonomousSelector.addObject("Forward 4", new Auto(1));
         SmartDashboard.putData("Auto Type", autonomousSelector);
         
+        Joystick leftStick = new Joystick(0);
+        Joystick rightStick = new Joystick(1);
         driveModeSelector = new SendableChooser();
-        driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade());
-        driveModeSelector.addObject("Two Stick Tank", new TwoStickTank());
+        driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
+        driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
         SmartDashboard.putData("Drive Type", driveModeSelector);
         
         new Thread(() -> {
@@ -82,12 +86,14 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand == null) autonomousCommand.cancel();
-
+        
+        driveType = (Command) driveModeSelector.getSelected();
+        /*
         Joystick leftStick = new Joystick(0);
         Joystick rightStick = new Joystick(1);
-        TwoStickArcade twoStickArcade = new TwoStickArcade(leftStick, rightStick);
+        TwoStickArcade twoStickArcade = new TwoStickArcade(leftStick, rightStick);*/
 
-        twoStickArcade.start();
+        driveType.start();
     }
 
     /**

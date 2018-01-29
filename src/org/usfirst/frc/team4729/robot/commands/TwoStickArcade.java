@@ -20,7 +20,6 @@ public class TwoStickArcade extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        SmartDashboard.putString("Drive Type", "2 Stick Arcade");
     }
 
     // Called repeatedly when this Command is scheduled to run

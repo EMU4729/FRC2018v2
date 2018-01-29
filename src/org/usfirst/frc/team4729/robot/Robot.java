@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SmartDashboard smartDashboard;
-    SendableChooser autonomousSelector;
+    SendableChooser<Auto> autonomousSelector;
     //CameraServer camera;
 
     /**
@@ -40,10 +40,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
-        autonomousSelector = new SendableChooser();
+        autonomousSelector = new SendableChooser<Auto>();
         autonomousSelector.addDefault("Forward 2", new Auto(0));
         autonomousSelector.addObject("Forward 4", new Auto(1));
-        SmartDashboard.putData("Auto Type", autonomousSelector);
         new Thread(() -> {
 	        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	        camera.setResolution(640, 480);

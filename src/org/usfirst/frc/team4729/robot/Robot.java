@@ -33,7 +33,9 @@ public class Robot extends IterativeRobot {
     Command driveType;
     SmartDashboard smartDashboard;
     SendableChooser<Auto> autonomousSelector;
+
     SendableChooser<Command> driveModeSelector;
+
     //CameraServer camera;
 
     /**
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveSubsystem = new DriveSubsystem();
         oi = new OI();
+
         
         autonomousSelector = new SendableChooser<Auto>();
         autonomousSelector.addDefault("Forward 2", new Auto("Forward 2"));
@@ -56,6 +59,11 @@ public class Robot extends IterativeRobot {
         driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
         SmartDashboard.putData("Drive Type", driveModeSelector);
         
+
+        autonomousSelector = new SendableChooser<Auto>();
+        autonomousSelector.addDefault("Forward 2", new Auto("Forward 2"));
+        autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
+
         new Thread(() -> {
 	        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	        camera.setResolution(640, 480);

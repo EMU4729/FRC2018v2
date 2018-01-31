@@ -15,6 +15,12 @@
 //	double switchside;
 //	
 //	public void moveToSwitch(switchside) {
-//		
+//		if (switchside == 0) {
+//			
+//		} if (switchside == 1) {
+//			
+//		}else {
+//			
+//		}
 //	}
 //}

@@ -61,11 +61,10 @@ public class DriveSubsystem extends Subsystem {
     	rb = new MotorPID(rightBackDrive, rightEncoder);
     	
     	
-    	
-    	lf.enable();
-    	rf.enable();
-    	lb.enable();
-    	rb.enable();
+//    	lf.enable();
+//    	rf.enable();
+//    	lb.enable();
+//    	rb.enable();
     }
 
     public void initDefaultCommand() {
@@ -73,45 +72,45 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public void arcade(double desiredMove, double desiredTurn) {
-    	lf.setSetpoint(100);
-    	rf.setSetpoint(100);
-    	lb.setSetpoint(100);
-    	rb.setSetpoint(100);
+//    	lf.setSetpoint(100);
+//    	rf.setSetpoint(100);
+//    	lb.setSetpoint(100);
+//    	rb.setSetpoint(100);
     	
     	SmartDashboard.putNumber("Speed", lf.getPosition());
     	
     	SmartDashboard.putNumber("Desired", lf.getSetpoint());
-//        if ((desiredMove < 0.1) && (desiredMove > -0.1)){
-//            desiredMove = 0;
-//            forwardSpeed = 0;
-//        }
-//        if ((desiredTurn < 0.1) && (desiredTurn > -0.1)){
-//            desiredTurn = 0;
-//            turnSpeed = 0;
-//        }
-//
-//        if  (((desiredMove > 0) && (forwardSpeed < 0)) || ((desiredMove < 0) && (forwardSpeed > 0))){
-//            forwardSpeed = 0;
-//        }
-//        if (((desiredTurn > 0) && (turnSpeed < 0)) || ((desiredTurn < 0) && (turnSpeed > 0))){
-//            turnSpeed = 0;
-//        }
-//
-//        if (Math.abs(desiredMove) < Math.abs(forwardSpeed)){
-//            forwardSpeed = desiredMove;
-//        }
-//
-//        if (Math.abs(desiredTurn) < Math.abs(turnSpeed)) {
-//            turnSpeed = desiredTurn;
-//        }
-//
-//        turnSpeed += (desiredTurn-turnSpeed)*acceleration;
-//        forwardSpeed += (desiredMove-forwardSpeed)*acceleration;
-//
-//        power (forwardSpeed*speed - turnSpeed*speed,
-//        	   forwardSpeed*speed - turnSpeed*speed,
-//        	   forwardSpeed*speed + turnSpeed*speed,
-//        	   forwardSpeed*speed + turnSpeed*speed);
+        if ((desiredMove < 0.1) && (desiredMove > -0.1)){
+            desiredMove = 0;
+            forwardSpeed = 0;
+        }
+        if ((desiredTurn < 0.1) && (desiredTurn > -0.1)){
+            desiredTurn = 0;
+            turnSpeed = 0;
+        }
+
+        if  (((desiredMove > 0) && (forwardSpeed < 0)) || ((desiredMove < 0) && (forwardSpeed > 0))){
+            forwardSpeed = 0;
+        }
+        if (((desiredTurn > 0) && (turnSpeed < 0)) || ((desiredTurn < 0) && (turnSpeed > 0))){
+            turnSpeed = 0;
+        }
+
+        if (Math.abs(desiredMove) < Math.abs(forwardSpeed)){
+            forwardSpeed = desiredMove;
+        }
+
+        if (Math.abs(desiredTurn) < Math.abs(turnSpeed)) {
+            turnSpeed = desiredTurn;
+        }
+
+        turnSpeed += (desiredTurn-turnSpeed)*acceleration;
+        forwardSpeed += (desiredMove-forwardSpeed)*acceleration;
+
+        power (forwardSpeed*speed - turnSpeed*speed,
+        	   forwardSpeed*speed - turnSpeed*speed,
+        	   forwardSpeed*speed + turnSpeed*speed,
+        	   forwardSpeed*speed + turnSpeed*speed);
     }
 
     public void tank (double desiredLeft, double desiredRight) {

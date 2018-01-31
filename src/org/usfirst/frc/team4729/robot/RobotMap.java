@@ -13,6 +13,9 @@ public class RobotMap {
      public static int MOTOR_RIGHT_FRONT = 3;
      public static int MOTOR_RIGHT_BACK = 4;
      
+     public static int MOTOR_FLAP_RIGHT;
+     public static int MOTOR_FLAP_LEFT;
+     
      public static int ENCODER_LEFT_A = 1;
      public static int ENCODER_LEFT_B = 2;
      public static int ENCODER_LEFT_INDEX = 3;

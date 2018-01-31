@@ -163,5 +163,9 @@ public class DriveSubsystem extends Subsystem {
         rightFrontDrive.set(ControlMode.PercentOutput, rightFront);
         rightBackDrive.set(ControlMode.PercentOutput, rightBack);
     }
+    
+    public Encoder[] getEncoders() {
+    		return new Encoder[] {leftEncoder, rightEncoder};
+    }
 }
 

@@ -48,8 +48,8 @@ public class Robot extends IterativeRobot {
 
         
         autonomousSelector = new SendableChooser<Auto>();
-        autonomousSelector.addDefault("Forward 2", new Auto("Forward 2"));
-        autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
+        autonomousSelector.addDefault("AutoLeft", new Auto("AutoLeft", driveSubsystem.getEncoders()));
+        autonomousSelector.addObject("Forward 4", new Auto("Forward 4", driveSubsystem.getEncoders()));
         SmartDashboard.putData("Auto Type", autonomousSelector);
         
         Joystick leftStick = new Joystick(0);
@@ -59,10 +59,10 @@ public class Robot extends IterativeRobot {
         driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
         SmartDashboard.putData("Drive Type", driveModeSelector);
         
-
-        autonomousSelector = new SendableChooser<Auto>();
-        autonomousSelector.addDefault("Forward 2", new Auto("Forward 2"));
-        autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
+//		  Why are there two of these?
+//        autonomousSelector = new SendableChooser<Auto>();
+//        autonomousSelector.addDefault("Forward 2", new Auto("Forward 2", null));
+//        autonomousSelector.addObject("Forward 4", new Auto("Forward 4", null));
 
         new Thread(() -> {
 	        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();

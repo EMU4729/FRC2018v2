@@ -16,10 +16,10 @@ public class MotorPID extends PIDSubsystem {
 	Encoder encoder;
 
     // Initialize your subsystem here
-    public MotorPID (TalonSRX motor, Encoder encoder) {
+    public MotorPID(TalonSRX motor, Encoder encoder) {
     	super ("MotorPID", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
-    	getPIDController ().setContinuous (false);
+    	getPIDController().setContinuous(false);
     	this.motor = motor;
     	this.encoder = encoder;
     	setInputRange(0, 100);
@@ -52,6 +52,6 @@ public class MotorPID extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	motor.set (ControlMode.PercentOutput, output);
+    	motor.set(ControlMode.PercentOutput, output);
     }
 }

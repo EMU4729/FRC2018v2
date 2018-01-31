@@ -13,10 +13,10 @@ public class Auto extends CommandGroup {
     	
     	switch (autoType) {
     	case "Forward 2":
-    		addSequential (new MoveForwards (2));
+    		addSequential(new MoveForwards (2));
     		break;
     	case "Forward 4":
-    		addSequential (new MoveForwards (4));
+    		addSequential(new MoveForwards (4));
     		break;
     	}
     	

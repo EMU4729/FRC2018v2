@@ -1,44 +1,51 @@
 <xml version="1.0">
 <dashboard>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="712" y="18"/>
-		<width>567</width>
-		<height>426</height>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<widget field="Drive Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="305" y="48"/>
-	</widget>
 	<widget field="Auto Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="49" y="39"/>
+		<location x="348" y="40"/>
+	</widget>
+	<widget field="Drive Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="190" y="18"/>
+	</widget>
+	<widget field="Testing Endoders: Right" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="72" y="136"/>
+	</widget>
+	<widget field="Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="41" y="39"/>
+		<height>21</height>
+	</widget>
+	<widget field="Testing Endoders: Left" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="72" y="94"/>
+	</widget>
+	<widget field="Desired" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="39" y="8"/>
 	</widget>
 </dashboard>
 <live-window>
 	<widget field="DriveSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="220"/>
+		<location x="28" y="26"/>
+	</widget>
+	<widget field="MotorPID" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PIDController" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="16"/>
+			<height>156</height>
+			<width>137</width>
+		</widget>
+		<location x="4" y="17"/>
+		<width>149</width>
+		<height>179</height>
 	</widget>
 	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Encoder[1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
+		<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+			<location x="6" y="16"/>
+			<height>98</height>
+			<width>201</width>
 		</widget>
-		<widget field="Encoder[1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
+		<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+			<location x="6" y="114"/>
+			<height>98</height>
+			<width>201</width>
 		</widget>
-		<widget field="Encoder[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Encoder[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<location x="0" y="0"/>
+		<location x="7" y="22"/>
 		<width>213</width>
 		<height>219</height>
 	</widget>

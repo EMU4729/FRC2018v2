@@ -1,21 +1,23 @@
 package org.usfirst.frc.team4729.robot.commands;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto extends CommandGroup {
 
-    public Auto(String autoType) {
-    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
-    	
-    	switch (autoType) {
-    	case "Forward 2":
-    		addSequential(new MoveForwards (2));
-    		break;
-    	case "Forward 4":
-    		addSequential(new MoveForwards (4));
-    		break;
-    	}
+    public Auto(String autoType, Encoder[] encoders) {
+	    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
+	    	
+	    	switch (autoType) {
+	    	case "AutoLeft":
+	    		addSequential (new AutoLeft(encoders));
+	    		break;
+	    	case "Forward 4":
+	    		addSequential (new MoveForwards (4));
+	    		break;
+	    }
+
     	
 //    	if(gameData.charAt(0) == 'L')
 //		{

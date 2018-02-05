@@ -4,11 +4,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class Auto extends CommandGroup {
-	
+
     public Auto(String autoType, Encoder[] encoders) {
 	    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
 	    	
@@ -19,7 +16,8 @@ public class Auto extends CommandGroup {
 	    	case "Forward 4":
 	    		addSequential (new MoveForwards (4));
 	    		break;
-	    	}
+	    }
+
     	
 //    	if(gameData.charAt(0) == 'L')
 //		{

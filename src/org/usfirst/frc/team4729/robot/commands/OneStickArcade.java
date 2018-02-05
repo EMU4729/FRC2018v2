@@ -20,11 +20,12 @@ public class OneStickArcade extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        SmartDashboard.putString("Drive Type", "1 Stick Arcade");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumber("Testing Endoder Distance: Left", Robot.driveSubsystem.getLeftEncoder());
+    	SmartDashboard.putNumber("Testing Endoder Distance: Right", Robot.driveSubsystem.getRightEncoder());
         Robot.driveSubsystem.arcade(stick.getY(), stick.getX());
     }
 

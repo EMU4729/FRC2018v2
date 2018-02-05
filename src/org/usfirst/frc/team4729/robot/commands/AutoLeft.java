@@ -19,15 +19,13 @@ public class AutoLeft extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     		distance = 3.5;
-    		ticksPerDistance = 7;
-    		ticksToMove = distance*ticksPerDistance;
     		this.encoder = encoder;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     		Robot.driveSubsystem.resetEncoders();
-    		Robot.driveSubsystem.arcade(ticksToMove, 0);
+    		Robot.driveSubsystem.arcade(0.75, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,7 +34,7 @@ public class AutoLeft extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		if ((encoder[0].getDistance() + encoder[2].getDistance())/2 >= ticksToMove) {
+    		if ((encoder[0].getDistance() + encoder[1].getDistance())/2 >= distance) {
             return true;
         } else {
             return false;
@@ -45,10 +43,12 @@ public class AutoLeft extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveSubsystem.arcade(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

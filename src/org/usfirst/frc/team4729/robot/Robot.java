@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4729.robot.commands.Auto;
 import org.usfirst.frc.team4729.robot.commands.MoveForwards;
+import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
@@ -54,8 +55,9 @@ public class Robot extends IterativeRobot {
 		Joystick leftStick = new Joystick(0);
 		Joystick rightStick = new Joystick(1);
 		driveModeSelector = new SendableChooser<Command>();
-		driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
+		driveModeSelector.addObject("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
 		driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
+		driveModeSelector.addDefault("One Stick Arcade", new OneStickArcade(leftStick));
 		SmartDashboard.putData("Drive Type", driveModeSelector);
 
 		autonomousSelector = new SendableChooser<Auto>();
@@ -91,6 +93,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		Robot.driveSubsystem.resetEncoders();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 

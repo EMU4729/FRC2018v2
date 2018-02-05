@@ -22,6 +22,9 @@ public class DriveSubsystem extends Subsystem {
     
     Encoder leftEncoder;
     Encoder rightEncoder;
+    
+    double circumferenceOfWheels = 0.1016;
+    double pulsesPerRevolution = 2048;
 
     double leftSpeed = 0;
     double rightSpeed = 0;
@@ -44,15 +47,17 @@ public class DriveSubsystem extends Subsystem {
     	rightFrontDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_FRONT);
     	rightBackDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_BACK);
     	
-    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, RobotMap.ENCODER_LEFT_INDEX);
+//    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, En);
+    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, false, Encoder.EncodingType.k4X);
+
     	leftEncoder.setMaxPeriod(0.1);
     	leftEncoder.setMinRate(10);
-    	leftEncoder.setDistancePerPulse(5);
+    	leftEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
     	leftEncoder.setSamplesToAverage(7);
-    	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, RobotMap.ENCODER_RIGHT_INDEX);
+    	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false, Encoder.EncodingType.k4X);
     	rightEncoder.setMaxPeriod(0.1);
     	rightEncoder.setMinRate(10);
-    	rightEncoder.setDistancePerPulse(5);
+    	rightEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
     	rightEncoder.setSamplesToAverage(7);
     	
     	lf = new MotorPID(leftFrontDrive, leftEncoder);

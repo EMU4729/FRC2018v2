@@ -1,31 +1,13 @@
 package org.usfirst.frc.team4729.robot.commands;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Auto extends CommandGroup {
+/**
+ *
+ */
+public class AutoTurn extends CommandGroup {
 
-    public Auto(String autoType) {
-	    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
-	    	
-	    	switch (autoType) {
-	    	case "AutoLeft":
-	    		addSequential (new AutoLeft());
-	    		break;
-	    	case "Forward 4":
-	    		addSequential (new AutoTurn());
-	    		break;
-	    }
-
-    	
-//    	if(gameData.charAt(0) == 'L')
-//		{
-//    		Robot.driveSubsystem.tank(1, 0);
-//		} else {
-//			Robot.driveSubsystem.tank(0, 1);
-//		}
-    	
+    public AutoTurn() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -42,5 +24,8 @@ public class Auto extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addSequential(new AutoTurnForwards());
+    	addSequential(new AutoTurnTurn());
+    	addSequential(new AutoTurnForwards());
     }
 }

@@ -17,6 +17,7 @@ import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.GyroSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +29,7 @@ import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
+	public static GyroSubsystem gyroSubsystem;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -45,11 +47,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		driveSubsystem = new DriveSubsystem();
+		gyroSubsystem = new GyroSubsystem();
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<Auto>();
-		autonomousSelector.addDefault("Forward 2", new Auto("Auto Left", Robot.driveSubsystem.getEncoders()));
-		autonomousSelector.addObject("Forward 4", new Auto("Forward 4", Robot.driveSubsystem.getEncoders()));
+		autonomousSelector.addDefault("Forward 2", new Auto("Auto Left"));
+		autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick leftStick = new Joystick(0);
@@ -90,6 +93,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		Robot.driveSubsystem.resetEncoders();
+		Robot.gyroSubsystem.resetGyro();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 

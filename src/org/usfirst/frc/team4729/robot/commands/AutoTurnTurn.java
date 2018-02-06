@@ -2,26 +2,25 @@ package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoLeft extends Command {
+public class AutoTurnTurn extends Command {
+
+	double degrees;
 	
-	double distance;
-	
-    public AutoLeft() {
+    public AutoTurnTurn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		distance = 3.5;
+    		degrees = 90;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.driveSubsystem.resetEncoders();
-    		Robot.driveSubsystem.arcade(0.75, 0);
+    		Robot.gyroSubsystem.resetGyro();
+    		Robot.driveSubsystem.arcade(0, 0.75);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +29,7 @@ public class AutoLeft extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		if ((Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2 >= distance) {
+    		if (Robot.gyroSubsystem.getGyroAngle() >= degrees) {
             return true;
         } else {
             return false;

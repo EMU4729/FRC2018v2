@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team4729.robot.commands.ClosePiston;
 import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
+import org.usfirst.frc.team4729.robot.commands.OpenPiston;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 
@@ -23,9 +25,9 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
  *
  */
 public class OI {
-    Joystick leftStick   = new Joystick(0);
+    Joystick leftStick   = new Joystick(2);
     Joystick rightStick  = new Joystick(1);
-    Joystick xbox        = new Joystick(2);
+    Joystick xbox        = new Joystick(0);
     Button leftButton1       = new JoystickButton(leftStick,  1);
     Button leftButton2       = new JoystickButton(leftStick,  2);
     Button leftButton3       = new JoystickButton(leftStick,  3);
@@ -82,8 +84,8 @@ public class OI {
         //rightButton9.whileHeld ();
         //rightButton10.whileHeld ();
         //rightButton11.whileHeld ();
-        //a.whileHeld ();
-        //b.whileHeld ();
+        a.whenPressed (new OpenPiston());
+        b.whenPressed (new ClosePiston());
         //x.whileHeld ();
         //y.whileHeld ();
         //lb.whileHeld ();

@@ -41,7 +41,7 @@ public class MotorPID extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return encoder.getRate ();
+        return encoder.getDistance();
     }
     
     public double getPIDInput() {

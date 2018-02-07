@@ -77,10 +77,10 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public void arcade(double desiredMove, double desiredTurn) {
-//    	lf.setSetpoint(100);
-//    	rf.setSetpoint(100);
-//    	lb.setSetpoint(100);
-//    	rb.setSetpoint(100);
+//    	lf.setSetpoint(3);
+//    	rf.setSetpoint(3);
+//    	lb.setSetpoint(3);
+//    	rb.setSetpoint(3);
     	
     	SmartDashboard.putNumber("Speed", lf.getPosition());
     	

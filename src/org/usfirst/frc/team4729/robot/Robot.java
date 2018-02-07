@@ -12,12 +12,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4729.robot.commands.Auto;
+import org.usfirst.frc.team4729.robot.commands.ClosePiston;
 import org.usfirst.frc.team4729.robot.commands.MoveForwards;
 import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
+import org.usfirst.frc.team4729.robot.commands.OpenPiston;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.GyroSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.Piston;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,13 +33,14 @@ public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
 	public static GyroSubsystem gyroSubsystem;
+	public static Piston piston;
 	public static OI oi;
 
 	Command autonomousCommand;
 	Command driveType;
 	SmartDashboard smartDashboard;
 	SendableChooser<Auto> autonomousSelector;
-
+	Joystick xbox = new Joystick(0);
 	SendableChooser<Command> driveModeSelector;
 
 	// CameraServer camera;
@@ -48,6 +52,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		driveSubsystem = new DriveSubsystem();
 		gyroSubsystem = new GyroSubsystem();
+		piston = new Piston();
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<Auto>();
@@ -55,8 +60,9 @@ public class Robot extends IterativeRobot {
 		autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
-		Joystick leftStick = new Joystick(0);
+		Joystick leftStick = new Joystick(2);
 		Joystick rightStick = new Joystick(1);
+		
 		driveModeSelector = new SendableChooser<Command>();
 		driveModeSelector.addObject("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
 		driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
@@ -119,6 +125,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		if(xbox.getRawButtonPressed(1)) {
+			new OpenPiston();
+		}
+		else {
+			new ClosePiston();
+		}
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4729.robot.commands;
 
+import org.usfirst.frc.team4729.robot.Robot;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,7 +10,8 @@ public class Auto extends CommandGroup {
 
     public Auto(String autoType) {
 	    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
-	    	
+	    	Robot.driveSubsystem.setMotorsToDistance();
+	    	Robot.driveSubsystem.enable();
 	    	switch (autoType) {
 	    	case "AutoLeft":
 	    		addSequential (new AutoLeft());

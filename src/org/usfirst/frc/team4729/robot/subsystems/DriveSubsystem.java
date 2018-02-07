@@ -124,5 +124,19 @@ public class DriveSubsystem extends Subsystem {
     	leftBackPIDMotor.disable();
     	rightBackPIDMotor.disable();
     }
+    
+    public void setMotorsToSpeed() {
+    	leftFrontPIDMotor.useSpeed();
+    	rightFrontPIDMotor.useSpeed();
+    	leftBackPIDMotor.useSpeed();
+    	rightBackPIDMotor.useSpeed();
+    }
+    
+    public void setMotorsToDistance() {
+    	leftFrontPIDMotor.useDistance();
+    	rightFrontPIDMotor.useDistance();
+    	leftBackPIDMotor.useDistance();
+    	rightBackPIDMotor.useDistance();
+    }
 }
 

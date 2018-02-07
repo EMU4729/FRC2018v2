@@ -13,7 +13,7 @@ public class Auto extends CommandGroup {
 	    	case "AutoLeft":
 	    		addSequential (new AutoLeft());
 	    		break;
-	    	case "Forward 4":
+	    	case "Auto Turn":
 	    		addSequential (new AutoTurn());
 	    		break;
 	    }

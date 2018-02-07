@@ -51,8 +51,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<Auto>();
-		autonomousSelector.addDefault("Forward 2", new Auto("Auto Left"));
-		autonomousSelector.addObject("Forward 4", new Auto("Forward 4"));
+		autonomousSelector.addDefault("Auto Left", new Auto("Auto Left"));
+		autonomousSelector.addObject("Auto Turn", new Auto("Auto Turn"));
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick leftStick = new Joystick(0);
@@ -76,6 +76,8 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
+		Robot.driveSubsystem.resetEncoders();
+		Robot.gyroSubsystem.resetGyro();
 		autonomousCommand = (Command) autonomousSelector.getSelected();
 		autonomousCommand.start();
 	}

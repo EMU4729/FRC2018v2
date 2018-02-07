@@ -54,11 +54,13 @@ public class DriveSubsystem extends Subsystem {
     	leftEncoder.setMinRate(10);
     	leftEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
     	leftEncoder.setSamplesToAverage(7);
+    	leftEncoder.setReverseDirection(true);
     	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false, Encoder.EncodingType.k4X);
     	rightEncoder.setMaxPeriod(0.1);
     	rightEncoder.setMinRate(10);
     	rightEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
     	rightEncoder.setSamplesToAverage(7);
+    	rightEncoder.setReverseDirection(true);
     	
     	lf = new MotorPID(leftFrontDrive, leftEncoder);
     	rf = new MotorPID(rightFrontDrive, rightEncoder);

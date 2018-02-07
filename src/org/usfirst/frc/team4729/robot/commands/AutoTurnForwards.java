@@ -4,28 +4,32 @@ import org.usfirst.frc.team4729.robot.Robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class AutoLeft extends Command {
-	
+public class AutoTurnForwards extends Command {
+
 	double distance;
+	int counter;
 	
-    public AutoLeft() {
+    public AutoTurnForwards() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     		distance = 3.5;
+    		counter = 0;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     		Robot.driveSubsystem.resetEncoders();
-    		Robot.driveSubsystem.arcade(0.75, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveSubsystem.arcade(0.75, 0);
+    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2);
     }
 
     // Make this return true when this Command no longer needs to run execute()

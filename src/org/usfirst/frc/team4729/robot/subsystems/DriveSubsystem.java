@@ -148,11 +148,28 @@ public class DriveSubsystem extends Subsystem {
     	rightBackPIDMotor.useAngle();
     }
     
-    public void turnToAngle(double angle) {
+    public void setMotorAngle(double angle) {
+    	setMotorsToAngle();
     	leftFrontPIDMotor.setSetpoint(angle);
     	rightFrontPIDMotor.setSetpoint(angle);
     	leftBackPIDMotor.setSetpoint(angle);
     	rightBackPIDMotor.setSetpoint(angle);
+    }
+    
+    public void setMotorDistance(double distance) {
+    	setMotorsToDistance();
+    	leftFrontPIDMotor.setSetpoint(distance);
+    	rightFrontPIDMotor.setSetpoint(distance);
+    	leftBackPIDMotor.setSetpoint(distance);
+    	rightBackPIDMotor.setSetpoint(distance);
+    }
+    
+    public void setMotorSpeed(double speed) {
+    	setMotorsToSpeed();
+    	leftFrontPIDMotor.setSetpoint(speed);
+    	rightFrontPIDMotor.setSetpoint(speed);
+    	leftBackPIDMotor.setSetpoint(speed);
+    	rightBackPIDMotor.setSetpoint(speed);
     }
 }
 

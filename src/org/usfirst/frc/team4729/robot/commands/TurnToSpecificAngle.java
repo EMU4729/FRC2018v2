@@ -18,7 +18,7 @@ public class TurnToSpecificAngle extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.setMotorsToAngle();
-    	Robot.driveSubsystem.turnToAngle(90);
+    	Robot.driveSubsystem.setMotorAngle(90);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,7 +28,7 @@ public class TurnToSpecificAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.gyroSubsystem.getGyroAngle() >= 85 && Robot.gyroSubsystem.getGyroAngle() <= 95) {
+    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - 90) <= .5) {
     		return true;
     	} else {
     		return false;

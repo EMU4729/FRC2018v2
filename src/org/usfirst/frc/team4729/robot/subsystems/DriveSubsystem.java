@@ -35,17 +35,13 @@ public class DriveSubsystem extends Subsystem {
     double speed = 1;
     
     PIDController leftFrontPIDMotor;
-	PIDController rightFrontPIDMotor;
-	PIDController leftBackPIDMotor;
-	PIDController rightBackPIDMotor;
+	  PIDController rightFrontPIDMotor;
+	  PIDController leftBackPIDMotor;
+	  PIDController rightBackPIDMotor;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public DriveSubsystem() {
-    	leftFrontDrive = new TalonSRX(RobotMap.MOTOR_LEFT_FRONT);
-    	leftBackDrive = new TalonSRX(RobotMap.MOTOR_LEFT_BACK);
-    	rightFrontDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_FRONT);
-    	rightBackDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_BACK);
     	
     	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, false, Encoder.EncodingType.k4X);
 
@@ -65,18 +61,18 @@ public class DriveSubsystem extends Subsystem {
     	rightFrontPIDMotor = new PIDController(rightFrontDrive, rightEncoder);
     	leftBackPIDMotor = new PIDController(leftBackDrive, leftEncoder);
     	rightBackPIDMotor = new PIDController(rightBackDrive, rightEncoder);
-    	
     }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+
     public void arcade(double forwardSpeed, double turnSpeed) {  
     	SmartDashboard.putNumber("Speed", leftFrontPIDMotor.getPosition());
     	SmartDashboard.putNumber("Desired", leftFrontPIDMotor.getSetpoint());
     	
-        power(forwardSpeed*speed - turnSpeed*speed,
+      power(forwardSpeed*speed - turnSpeed*speed,
         	   forwardSpeed*speed - turnSpeed*speed,
         	   forwardSpeed*speed + turnSpeed*speed,
         	   forwardSpeed*speed + turnSpeed*speed);

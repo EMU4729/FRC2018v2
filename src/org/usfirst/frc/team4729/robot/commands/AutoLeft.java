@@ -20,7 +20,7 @@ public class AutoLeft extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run

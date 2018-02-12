@@ -30,5 +30,9 @@ public class GyroSubsystem extends Subsystem {
     public void resetGyro() {
     	gyro.reset();
     }
+    
+    public ADXRS450_Gyro getGyro() {
+    	return gyro;
+    }
 }
 

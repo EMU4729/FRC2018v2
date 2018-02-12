@@ -5,6 +5,7 @@ import org.usfirst.frc.team4729.robot.RobotMap;
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,10 +35,10 @@ public class DriveSubsystem extends Subsystem {
     double acceleration = 0.05;
     double speed = 1;
     
-    PIDController leftFrontPIDMotor;
-	PIDController rightFrontPIDMotor;
-	PIDController leftBackPIDMotor;
-	PIDController rightBackPIDMotor;
+    PIDMotorController leftFrontPIDMotor;
+	PIDMotorController rightFrontPIDMotor;
+	PIDMotorController leftBackPIDMotor;
+	PIDMotorController rightBackPIDMotor;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -62,10 +63,10 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.setSamplesToAverage(7);
     	rightEncoder.setReverseDirection(true);
     	
-    	leftFrontPIDMotor = new PIDController(leftFrontDrive, leftEncoder);
-    	rightFrontPIDMotor = new PIDController(rightFrontDrive, rightEncoder);
-    	leftBackPIDMotor = new PIDController(leftBackDrive, leftEncoder);
-    	rightBackPIDMotor = new PIDController(rightBackDrive, rightEncoder);
+    	leftFrontPIDMotor = new PIDMotorController(leftFrontDrive, leftEncoder, Robot.gyroSubsystem.getGyro(), false);
+    	rightFrontPIDMotor = new PIDMotorController(rightFrontDrive, rightEncoder, Robot.gyroSubsystem.getGyro(), true);
+    	leftBackPIDMotor = new PIDMotorController(leftBackDrive, leftEncoder, Robot.gyroSubsystem.getGyro(), false);
+    	rightBackPIDMotor = new PIDMotorController(rightBackDrive, rightEncoder, Robot.gyroSubsystem.getGyro(), true);
     }
 
     public void initDefaultCommand() {
@@ -138,6 +139,20 @@ public class DriveSubsystem extends Subsystem {
     	rightFrontPIDMotor.useDistance();
     	leftBackPIDMotor.useDistance();
     	rightBackPIDMotor.useDistance();
+    }
+    
+    public void setMotorsToAngle() {
+    	leftFrontPIDMotor.useAngle();
+    	rightFrontPIDMotor.useAngle();
+    	leftBackPIDMotor.useAngle();
+    	rightBackPIDMotor.useAngle();
+    }
+    
+    public void turnToAngle(double angle) {
+    	leftFrontPIDMotor.setSetpoint(angle);
+    	rightFrontPIDMotor.setSetpoint(angle);
+    	leftBackPIDMotor.setSetpoint(angle);
+    	rightBackPIDMotor.setSetpoint(angle);
     }
 }
 

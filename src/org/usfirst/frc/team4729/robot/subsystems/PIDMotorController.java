@@ -1,8 +1,11 @@
 package org.usfirst.frc.team4729.robot.subsystems;
 
+import org.usfirst.frc.team4729.robot.enums.PIDDriveMode;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -11,17 +14,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class PIDController extends PIDSubsystem {
+public class PIDMotorController extends PIDSubsystem {
 	PIDMotor motor;
-	boolean speedMode;
+	ADXRS450_Gyro gyro;
+	PIDDriveMode mode;
+	boolean isRightMotor;
 
     // Initialize your subsystem here
-    public PIDController(Talon motor, Encoder encoder) {
+    public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     	super ("PIDDistance", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
     	getPIDController().setContinuous(false);
+    	
     	this.motor = new PIDMotor(motor, encoder);
-    	speedMode = false;
+    	this.gyro = gyro;
+    	this.isRightMotor = isRightMotor;
+    	
+    	mode = PIDDriveMode.SPEED;
     	
     	setInputRange(0, 100);
     	setOutputRange(0, 1);
@@ -42,7 +51,15 @@ public class PIDController extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return motor.getDistance();
+    	switch (mode) {
+		case DISTANCE:
+    		return motor.getDistance();
+		case SPEED:
+			return 0;
+		case ANGLE:
+			return gyro.getAngle();
+    	}
+		return 0;
     }
     
     public double getPIDInput() {
@@ -53,19 +70,33 @@ public class PIDController extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	if (speedMode) {
-    		motor.setSetpoint(getSetpoint());
-    	} else {
-    		motor.setSetpoint(output);
+    	switch (mode) {
+		case SPEED:
+			motor.setSetpoint(getSetpoint());
+			break;
+		case DISTANCE:
+			motor.setSetpoint(output);
+			break;
+		case ANGLE:
+			if (isRightMotor) {
+				motor.setSetpoint(-output);
+			} else {
+				motor.setSetpoint(output);
+			}
+			break;	
     	}
     }
     
     public void useSpeed() {
-    	speedMode = true;
+    	mode = PIDDriveMode.SPEED;
     }
     
     public void useDistance() {
-    	speedMode = false;
+    	mode = PIDDriveMode.DISTANCE;
+    }
+    
+    public void useAngle() {
+    	mode = PIDDriveMode.ANGLE;
     }
 }
 

@@ -34,6 +34,10 @@ public class DriveSubsystem extends Subsystem {
     double acceleration = 0.05;
     double speed = 1;
     
+    PIDController leftFrontPIDMotor;
+	  PIDController rightFrontPIDMotor;
+	  PIDController leftBackPIDMotor;
+	  PIDController rightBackPIDMotor;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -53,77 +57,30 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.setSamplesToAverage(7);
     	rightEncoder.setReverseDirection(true);
     	
+    	leftFrontPIDMotor = new PIDController(leftFrontDrive, leftEncoder);
+    	rightFrontPIDMotor = new PIDController(rightFrontDrive, rightEncoder);
+    	leftBackPIDMotor = new PIDController(leftBackDrive, leftEncoder);
+    	rightBackPIDMotor = new PIDController(rightBackDrive, rightEncoder);
     }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public void arcade(double desiredMove, double desiredTurn) {
+
+    public void arcade(double forwardSpeed, double turnSpeed) {  
+    	SmartDashboard.putNumber("Speed", leftFrontPIDMotor.getPosition());
+    	SmartDashboard.putNumber("Desired", leftFrontPIDMotor.getSetpoint());
     	
-    	SmartDashboard.putNumber("Speed", getAverageEncoder());
-    	
-        if ((desiredMove < 0.1) && (desiredMove > -0.1)){
-            desiredMove = 0;
-            forwardSpeed = 0;
-        }
-        if ((desiredTurn < 0.1) && (desiredTurn > -0.1)){
-            desiredTurn = 0;
-            turnSpeed = 0;
-        }
-
-        if  (((desiredMove > 0) && (forwardSpeed < 0)) || ((desiredMove < 0) && (forwardSpeed > 0))){
-            forwardSpeed = 0;
-        }
-        if (((desiredTurn > 0) && (turnSpeed < 0)) || ((desiredTurn < 0) && (turnSpeed > 0))){
-            turnSpeed = 0;
-        }
-
-        if (Math.abs(desiredMove) < Math.abs(forwardSpeed)){
-            forwardSpeed = desiredMove;
-        }
-
-        if (Math.abs(desiredTurn) < Math.abs(turnSpeed)) {
-            turnSpeed = desiredTurn;
-        }
-
-        turnSpeed += (desiredTurn-turnSpeed)*acceleration;
-        forwardSpeed += (desiredMove-forwardSpeed)*acceleration;
-
-        power (forwardSpeed*speed - turnSpeed*speed,
+      power(forwardSpeed*speed - turnSpeed*speed,
         	   forwardSpeed*speed - turnSpeed*speed,
         	   forwardSpeed*speed + turnSpeed*speed,
         	   forwardSpeed*speed + turnSpeed*speed);
+        
     }
 
-    public void tank (double desiredLeft, double desiredRight) {
-        if ((desiredLeft < 0.1) && (desiredLeft > -0.1)){
-            desiredLeft = 0;
-            leftSpeed = 0;
-        }
-        if ((desiredRight < 0.1) && (desiredRight > -0.1)){
-            desiredRight = 0;
-            rightSpeed = 0;
-        }
-
-        if  (((desiredLeft > 0) && (leftSpeed < 0)) || ((desiredLeft < 0) && (leftSpeed > 0))){
-            leftSpeed = 0;
-        }
-        if (((desiredRight > 0) && (rightSpeed < 0)) || ((desiredRight < 0) && (rightSpeed > 0))){
-            rightSpeed = 0;
-        }
-
-        if (Math.abs(desiredLeft) < Math.abs(leftSpeed)){
-            leftSpeed = desiredLeft;
-        }
-
-        if (Math.abs(desiredRight) < Math.abs(rightSpeed)) {
-            rightSpeed = desiredRight;
-        }
-        rightSpeed += (desiredRight-rightSpeed)*acceleration;
-        leftSpeed += (desiredLeft-leftSpeed)*acceleration;
-
-        power (leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
+    public void tank (double leftSpeed, double rightSpeed) {
+        power(leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
     }
     
     public double getLeftEncoder() {
@@ -134,24 +91,48 @@ public class DriveSubsystem extends Subsystem {
     	return rightEncoder.getDistance();
     }
     
-    public double getAverageEncoder() {
-    	return (getLeftEncoder() + getRightEncoder())/2;
-    }
-    
-    public void resetEncoders () {
+    public void resetEncoders() {
     	leftEncoder.reset();
     	rightEncoder.reset();
     }
     
-    public void power (double leftFront, double leftBack, double rightFront, double rightBack) {
-    	leftFrontDrive.set(ControlMode.PercentOutput, -leftFront);
-        leftBackDrive.set(ControlMode.PercentOutput, -leftBack);
-        rightFrontDrive.set(ControlMode.PercentOutput, rightFront);
-        rightBackDrive.set(ControlMode.PercentOutput, rightBack);
+    public void power(double leftFront, double leftBack, double rightFront, double rightBack) {
+    	leftFrontPIDMotor.setSetpoint(-leftFront);
+    	rightFrontPIDMotor.setSetpoint(rightFront);
+    	leftBackPIDMotor.setSetpoint(-leftBack);
+    	rightBackPIDMotor.setSetpoint(rightBack);
     }
     
     public Encoder[] getEncoders() {
     		return new Encoder[] {leftEncoder, rightEncoder};
+    }
+    
+    public void enable() {
+    	leftFrontPIDMotor.enable();
+    	rightFrontPIDMotor.enable();
+    	leftBackPIDMotor.enable();
+    	rightBackPIDMotor.enable();
+    }
+    
+    public void disable() {
+    	leftFrontPIDMotor.disable();
+    	rightFrontPIDMotor.disable();
+    	leftBackPIDMotor.disable();
+    	rightBackPIDMotor.disable();
+    }
+    
+    public void setMotorsToSpeed() {
+    	leftFrontPIDMotor.useSpeed();
+    	rightFrontPIDMotor.useSpeed();
+    	leftBackPIDMotor.useSpeed();
+    	rightBackPIDMotor.useSpeed();
+    }
+    
+    public void setMotorsToDistance() {
+    	leftFrontPIDMotor.useDistance();
+    	rightFrontPIDMotor.useDistance();
+    	leftBackPIDMotor.useDistance();
+    	rightBackPIDMotor.useDistance();
     }
 }
 

@@ -17,7 +17,7 @@ public class AutoTurnForwards extends Command {
     public AutoTurnForwards() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		distance = 3.5;
+    		distance = 1;
     		counter = 0;
     }
 
@@ -28,7 +28,7 @@ public class AutoTurnForwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.arcade(0.75, 0);
+    	Robot.driveSubsystem.arcade(distance, 0);
     	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2);
     }
 

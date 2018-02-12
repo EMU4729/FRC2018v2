@@ -101,6 +101,7 @@ public class Robot extends IterativeRobot {
 		Robot.gyroSubsystem.resetGyro();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		Robot.driveSubsystem.setMotorsToSpeed();
 
 		driveType = (Command) driveModeSelector.getSelected();
 		/*

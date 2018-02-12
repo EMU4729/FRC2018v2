@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,7 +16,7 @@ public class PIDController extends PIDSubsystem {
 	boolean speedMode;
 
     // Initialize your subsystem here
-    public PIDController(TalonSRX motor, Encoder encoder) {
+    public PIDController(Talon motor, Encoder encoder) {
     	super ("PIDDistance", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
     	getPIDController().setContinuous(false);

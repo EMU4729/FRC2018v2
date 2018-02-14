@@ -14,11 +14,10 @@ public class AutoTurnForwards extends Command {
 	double distance;
 	int counter;
 	
-    public AutoTurnForwards() {
+    public AutoTurnForwards(double d) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		distance = 1;
-    		counter = 0;
+		distance = d;
     }
 
     // Called just before this Command runs the first time

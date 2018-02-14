@@ -1,33 +1,34 @@
 package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
+import org.usfirst.frc.team4729.robot.enums.Direction;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto extends CommandGroup {
-
     public Auto(String autoType) {
-	    	//String mode = SmartDashboard.getString("Auto Type", "forwards 2");
 	    	Robot.driveSubsystem.setMotorsToDistance();
 	    	Robot.driveSubsystem.enable();
+	    	
+	    	Direction side = Direction.LEFT; // A default in case something goes not good
+	    	
+//	    	if (gameData.charAt(0) == "L") {
+//	    		side = Direction.LEFT;
+//			} else if (gameData.charAt(0) == "R") {
+//				side = Direction.RIGHT;
+//			}
+	    	
 	    	switch (autoType) {
-	    	case "AutoLeft":
-	    		addSequential (new AutoLeft());
+	    	case "l":
+	    		//...
 	    		break;
-	    	case "Auto Turn":
-	    		addSequential (new AutoTurn());
+	    	case "m":
+	    		break;
+	    	case "r":
 	    		break;
 	    }
-
-    	
-//    	if(gameData.charAt(0) == 'L')
-//		{
-//    		Robot.driveSubsystem.tank(1, 0);
-//		} else {
-//			Robot.driveSubsystem.tank(0, 1);
-//		}
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

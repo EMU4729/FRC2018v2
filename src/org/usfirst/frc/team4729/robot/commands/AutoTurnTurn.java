@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
+import org.usfirst.frc.team4729.robot.enums.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,17 +12,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoTurnTurn extends Command {
 
 	double degrees;
+	Direction direction;
 	
-    public AutoTurnTurn() {
+    public AutoTurnTurn(double deg, Direction dir) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		degrees = 90;
+    	degrees = deg;
+    	direction = dir;
+    	if (dir == Direction.RIGHT) {
+    		degrees *= -1;
+    	}
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.gyroSubsystem.resetGyro();
-    		Robot.driveSubsystem.setMotorAngle(degrees);
+    	Robot.gyroSubsystem.resetGyro();
+    	Robot.driveSubsystem.setMotorAngle(degrees);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4729.robot;
 
 import edu.wpi.cscore.UsbCamera;
@@ -28,7 +27,6 @@ import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static DriveSubsystem driveSubsystem;
 	public static GyroSubsystem gyroSubsystem;
 	public static PneumaticsSubsystem pneumaticsSubsystem;
@@ -54,8 +52,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<Auto>();
-		autonomousSelector.addDefault("Auto Left", new Auto("Auto Left"));
-		autonomousSelector.addObject("Auto Turn", new Auto("Auto Turn"));
+		autonomousSelector.addObject("Left", new Auto("l"));
+		autonomousSelector.addDefault("Middle", new Auto("m"));
+		autonomousSelector.addObject("Right", new Auto("r"));
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick leftStick = new Joystick(0);

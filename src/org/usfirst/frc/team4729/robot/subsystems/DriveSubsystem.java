@@ -16,10 +16,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  *
  */
 public class DriveSubsystem extends Subsystem {
-    Talon leftFrontDrive;
-    Talon leftBackDrive;
-    Talon rightFrontDrive;
-    Talon rightBackDrive;
+    TalonSRX leftFrontDrive;
+    TalonSRX leftBackDrive;
+    TalonSRX rightFrontDrive;
+    TalonSRX rightBackDrive;
     
     Encoder leftEncoder;
     Encoder rightEncoder;
@@ -43,10 +43,10 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
     
     public DriveSubsystem() {
-    	leftFrontDrive = new Talon(RobotMap.MOTOR_LEFT_FRONT);
-    	leftBackDrive = new Talon(RobotMap.MOTOR_LEFT_BACK);
-    	rightFrontDrive = new Talon(RobotMap.MOTOR_RIGHT_FRONT);
-    	rightBackDrive = new Talon(RobotMap.MOTOR_RIGHT_BACK);
+    	leftFrontDrive = new TalonSRX(RobotMap.MOTOR_LEFT_FRONT);
+    	leftBackDrive = new TalonSRX(RobotMap.MOTOR_LEFT_BACK);
+    	rightFrontDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_FRONT);
+    	rightBackDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_BACK);
     	
 //    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, En);
     	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, false, Encoder.EncodingType.k4X);

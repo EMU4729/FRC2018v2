@@ -18,6 +18,7 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.WinchSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,9 +28,10 @@ import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static DriveSubsystem driveSubsystem;
 	public static GyroSubsystem gyroSubsystem;
-	public static PneumaticsSubsystem pneumaticsSubsystem;
+	public static DriveSubsystem driveSubsystem;
+	public static WinchSubsystem winchSubsystem;
+//	public static PneumaticsSubsystem pneumaticsSubsystem;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -48,7 +50,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		gyroSubsystem = new GyroSubsystem();
 		driveSubsystem = new DriveSubsystem();
-		pneumaticsSubsystem = new PneumaticsSubsystem();
+		winchSubsystem = new WinchSubsystem();
+//		pneumaticsSubsystem = new PneumaticsSubsystem();
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<Auto>();

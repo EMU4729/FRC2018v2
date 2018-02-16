@@ -21,7 +21,7 @@ public class PIDMotorController extends PIDSubsystem {
 	boolean isRightMotor;
 
     // Initialize your subsystem here
-    public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
+    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     	super ("PIDDistance", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
     	getPIDController().setContinuous(false);

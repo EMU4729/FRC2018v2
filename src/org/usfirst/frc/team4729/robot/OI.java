@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
+import org.usfirst.frc.team4729.robot.commands.WinchDown;
+import org.usfirst.frc.team4729.robot.commands.WinchUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -82,10 +84,10 @@ public class OI {
         //rightButton9.whileHeld ();
         //rightButton10.whileHeld ();
         //rightButton11.whileHeld ();
-        //a.whileHeld ();
+        a.whileHeld (new WinchDown());
         //b.whileHeld ();
         //x.whileHeld ();
-        //y.whileHeld ();
+        y.whileHeld (new WinchUp());
         //lb.whileHeld ();
         //rb.whileHeld ();
         //start.whileHeld();

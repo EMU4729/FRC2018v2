@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  *
  */
 public class PIDMotor extends PIDSubsystem {
-	Talon motor;
+	TalonSRX motor;
 	Encoder encoder;
 
     // Initialize your subsystem here
-    public PIDMotor(Talon motor, Encoder encoder) {
+    public PIDMotor(TalonSRX motor, Encoder encoder) {
     	super ("PIDMotor", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
     	getPIDController().setContinuous(false);
@@ -52,7 +52,7 @@ public class PIDMotor extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	motor.set(output);
+    	motor.set(ControlMode.PercentOutput, output);
     }
     
     public double getDistance() {

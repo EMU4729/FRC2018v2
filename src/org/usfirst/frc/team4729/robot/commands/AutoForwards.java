@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoTurnForwards extends Command {
+public class AutoForwards extends Command {
 
 	double distance;
 	int counter;
 	
-    public AutoTurnForwards(double d) {
+    public AutoForwards(double d) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		distance = d;

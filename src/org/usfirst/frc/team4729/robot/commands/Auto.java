@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto extends CommandGroup {
+	CommandGroup pathLeft;
+	CommandGroup pathMiddle;
+	CommandGroup pathRight;
+	
     public Auto(String autoType) {
 	    	Robot.driveSubsystem.setMotorsToDistance();
 	    	Robot.driveSubsystem.enable();
@@ -22,7 +26,7 @@ public class Auto extends CommandGroup {
 	    	
 	    	switch (autoType) {
 	    	case "l":
-	    		//...
+	    		
 	    		break;
 	    	case "m":
 	    		break;

@@ -2,3 +2,5 @@
 *.class
 *.class
 /org/
+/build/
+/dist/

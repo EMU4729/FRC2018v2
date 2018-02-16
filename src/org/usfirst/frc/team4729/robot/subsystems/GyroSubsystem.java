@@ -20,7 +20,6 @@ public class GyroSubsystem extends Subsystem {
     public GyroSubsystem() {
     	gyro = new ADXRS450_Gyro();
     	gyro.calibrate();
-    	
     }
     
     public double getGyroAngle() {

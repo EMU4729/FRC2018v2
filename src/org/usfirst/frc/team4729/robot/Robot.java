@@ -46,8 +46,8 @@ public class Robot extends IterativeRobot {
 	 * for any initialization code.
 	 */
 	public void robotInit() {
-		driveSubsystem = new DriveSubsystem();
 		gyroSubsystem = new GyroSubsystem();
+		driveSubsystem = new DriveSubsystem();
 		pneumaticsSubsystem = new PneumaticsSubsystem();
 		oi = new OI();
 

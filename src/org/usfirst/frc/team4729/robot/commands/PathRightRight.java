@@ -9,8 +9,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class PathRightRight extends CommandGroup {
     public PathRightRight() {
+    	System.out.println("Executing command");
 		addSequential(new AutoForwards(3.8155));
+		System.out.println("Done forwards #1");
 		addSequential(new AutoTurn(90, Direction.LEFT));
+		System.out.println("Done turn");
 		addSequential(new AutoForwards(0.53));
+		System.out.println("Done forwards #2");
     }
 }

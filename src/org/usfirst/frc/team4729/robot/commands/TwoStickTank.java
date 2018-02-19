@@ -10,12 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class TwoStickTank extends Command {
-    Joystick leftStick;
-    Joystick rightStick;
-    public TwoStickTank(Joystick leftStick, Joystick rightStick) {
+    Joystick xbox;
+    public TwoStickTank(Joystick x) {
         requires(Robot.driveSubsystem);
-        this.leftStick = leftStick;
-        this.rightStick = rightStick;
+        xbox = x;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -26,7 +24,7 @@ public class TwoStickTank extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.driveSubsystem.tank(leftStick.getY(), rightStick.getY());
+        Robot.driveSubsystem.tank(xbox.getRawAxis(1), xbox.getRawAxis(5));
     }
 
     // Make this return true when this Command no longer needs to run execute()

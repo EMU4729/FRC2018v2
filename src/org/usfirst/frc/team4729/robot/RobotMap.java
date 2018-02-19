@@ -18,10 +18,8 @@ public class RobotMap {
      
      public static int ENCODER_LEFT_A = 0;
      public static int ENCODER_LEFT_B = 1;
-     public static int ENCODER_LEFT_INDEX = 3;
      public static int ENCODER_RIGHT_A = 2;
      public static int ENCODER_RIGHT_B = 3;
-     public static int ENCODER_RIGHT_INDEX = 6;
      
      public static int GRABBER_LEFT_A = 0;
      public static int GRABBER_LEFT_B = 1;

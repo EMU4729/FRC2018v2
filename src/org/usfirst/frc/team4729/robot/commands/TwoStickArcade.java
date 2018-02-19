@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class TwoStickArcade extends Command {
-    Joystick leftStick;
-    Joystick rightStick;
+    Joystick xbox;
     
-    public TwoStickArcade(Joystick leftStick, Joystick rightStick) {
+    public TwoStickArcade(Joystick x) {
         requires(Robot.driveSubsystem);
-        this.leftStick = leftStick;
-        this.rightStick = rightStick;
+        xbox = x;
     }
 
     // Called just before this Command runs the first time
@@ -22,9 +20,13 @@ public class TwoStickArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.driveSubsystem.arcade(leftStick.getY(), rightStick.getX());
-        SmartDashboard.putNumber("Testing Endoders: Left", Robot.driveSubsystem.getLeftEncoder());
-        SmartDashboard.putNumber("Testing Endoders: Right", Robot.driveSubsystem.getRightEncoder());        
+        Robot.driveSubsystem.arcade(xbox.getRawAxis(1), xbox.getRawAxis(4));
+        SmartDashboard.putNumber("Testing Endoders: Left", Robot.driveSubsystem.getLeftEncoderRate());
+        SmartDashboard.putNumber("Testing Endoders: Right", Robot.driveSubsystem.getRightEncoderRate()); 
+        SmartDashboard.putNumber("leftStick", xbox.getRawAxis(1));
+        SmartDashboard.putNumber("rightStick", xbox.getRawAxis(4));
+        SmartDashboard.putNumber("leftEncoder", Robot.driveSubsystem.getLeftEncoderRate());
+        SmartDashboard.putNumber("rightEncoder", Robot.driveSubsystem.getRightEncoderRate());
     }
 
     // Make this return true when this Command no longer needs to run execute()

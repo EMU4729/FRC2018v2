@@ -17,7 +17,7 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.GyroSubsystem;
-import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
+//import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.WinchSubsystem;
 
 /**
@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command driveType;
 	SmartDashboard smartDashboard;
-	SendableChooser<Auto> autonomousSelector;
+	SendableChooser<String> autonomousSelector;
 
 	SendableChooser<Command> driveModeSelector;
 
@@ -54,18 +54,16 @@ public class Robot extends IterativeRobot {
 //		pneumaticsSubsystem = new PneumaticsSubsystem();
 		oi = new OI();
 
-		autonomousSelector = new SendableChooser<Auto>();
-		autonomousSelector.addObject("Left", new Auto("l"));
-		autonomousSelector.addDefault("Middle", new Auto("m"));
-		autonomousSelector.addObject("Right", new Auto("r"));
+		autonomousSelector = new SendableChooser<String>();
+		autonomousSelector.addObject("Left", "l");
+		autonomousSelector.addDefault("Middle", "m");
+		autonomousSelector.addObject("Right", "r");
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
-		Joystick leftStick = new Joystick(0);
-		Joystick rightStick = new Joystick(1);
+		Joystick xbox = new Joystick(0);
 		driveModeSelector = new SendableChooser<Command>();
-		driveModeSelector.addObject("Two Stick Arcade", new TwoStickArcade(leftStick, rightStick));
-		driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(leftStick, rightStick));
-		driveModeSelector.addDefault("One Stick Arcade", new OneStickArcade(leftStick));
+		driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade(xbox));
+		driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(xbox));
 		SmartDashboard.putData("Drive Type", driveModeSelector);
 
 		new Thread(() -> {
@@ -83,7 +81,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		Robot.driveSubsystem.resetEncoders();
 		Robot.gyroSubsystem.resetGyro();
-		autonomousCommand = (Command) autonomousSelector.getSelected();
+		String autonomousString = autonomousSelector.getSelected();
+		autonomousCommand = new Auto (autonomousString);
 		autonomousCommand.start();
 	}
 

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,19 +22,21 @@ public class PIDMotorController extends PIDSubsystem {
 	boolean isRightMotor;
 
     // Initialize your subsystem here
-    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
+//    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
+    public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     	super ("PIDDistance", 1.0, 0.0, 0.0);
     	setAbsoluteTolerance (0.05);
     	getPIDController().setContinuous(false);
     	
     	this.motor = new PIDMotor(motor, encoder);
+    	this.motor.enable();
     	this.gyro = gyro;
     	this.isRightMotor = isRightMotor;
     	
     	mode = PIDDriveMode.SPEED;
     	
-    	setInputRange(0, 100);
-    	setOutputRange(0, 1);
+    	setInputRange(-1, 1);
+    	setOutputRange(-1, 1);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -48,6 +51,7 @@ public class PIDMotorController extends PIDSubsystem {
 
     @Override
     protected double returnPIDInput() {
+//    	System.out.println("Mode: " + mode + " dist " + motor.getDistance() + " angle " + gyro.getAngle());
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
@@ -70,6 +74,7 @@ public class PIDMotorController extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
+    	SmartDashboard.putNumber("BLAH: ", getSetpoint());
     	switch (mode) {
 		case SPEED:
 			motor.setSetpoint(getSetpoint());

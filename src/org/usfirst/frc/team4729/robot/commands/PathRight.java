@@ -14,7 +14,8 @@ public class PathRight extends CommandGroup {
         	addSequential(new PathRightLeft());
         	break;
         case RIGHT:
-        	addSequential(new PathLeftRight());
+        	System.out.println("Right switch");
+        	addSequential(new PathRightRight());
         	break;
         }
     }

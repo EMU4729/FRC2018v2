@@ -27,7 +27,7 @@ import org.usfirst.frc.team4729.robot.commands.WinchUp;
 public class OI {
     Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
-    Joystick xbox        = new Joystick(2);
+    Joystick xbox        = leftStick;
     Button leftButton1       = new JoystickButton(leftStick,  1);
     Button leftButton2       = new JoystickButton(leftStick,  2);
     Button leftButton3       = new JoystickButton(leftStick,  3);
@@ -63,8 +63,8 @@ public class OI {
 
     public OI() {
         //leftButton1.whileHeld  ();
-    	leftButton2.whenPressed (new TwoStickArcade(leftStick, rightStick));
-    	leftButton3.whenPressed (new TwoStickTank(leftStick, rightStick));
+    	leftButton2.whenPressed (new TwoStickArcade(xbox));
+    	leftButton3.whenPressed (new TwoStickTank(xbox));
     	//leftButton4.whenPressed ();
     	//leftButton5.whenPressed ();
         //leftButton6.whenPressed ();

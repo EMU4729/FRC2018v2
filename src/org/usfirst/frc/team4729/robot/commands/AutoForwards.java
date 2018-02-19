@@ -22,18 +22,19 @@ public class AutoForwards extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.driveSubsystem.resetEncoders();
-    		Robot.driveSubsystem.setMotorDistance(distance);
+    	Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.setMotorDistance(distance);
+    	System.out.println("Moving for " + distance + " units!");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2);
+    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder()) / 2);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		if ((Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2 >= distance) {
+    	if ((Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder()) / 2 >= distance) {
             return true;
         } else {
             return false;
@@ -42,6 +43,7 @@ public class AutoForwards extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Moving has ended");
     	Robot.gyroSubsystem.resetGyro();
     	Robot.driveSubsystem.resetEncoders();
     	Robot.driveSubsystem.arcade(0, 0);

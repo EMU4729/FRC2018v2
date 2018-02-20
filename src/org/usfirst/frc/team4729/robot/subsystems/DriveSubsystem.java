@@ -38,7 +38,6 @@ public class DriveSubsystem extends Subsystem {
     double forwardSpeed = 0;
 
     double acceleration = 0.05;
-    double speed = 1;
     
     PIDMotorController leftFrontPIDMotor;
 	PIDMotorController rightFrontPIDMotor;
@@ -71,7 +70,7 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.setMinRate(10);
     	rightEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
     	rightEncoder.setSamplesToAverage(7);
-    	rightEncoder.setReverseDirection(true);
+    	rightEncoder.setReverseDirection(false);
     	
     	leftFrontPIDMotor = new PIDMotorController(leftFrontDrive, leftEncoder, Robot.gyroSubsystem.getGyro(), false);
     	rightFrontPIDMotor = new PIDMotorController(rightFrontDrive, rightEncoder, Robot.gyroSubsystem.getGyro(), true);
@@ -90,18 +89,15 @@ public class DriveSubsystem extends Subsystem {
     }
 
     public void arcade(double forwardSpeed, double turnSpeed) {  
-    	SmartDashboard.putNumber("Speed", leftFrontPIDMotor.getPosition());
-    	SmartDashboard.putNumber("Desired", leftFrontPIDMotor.getSetpoint());
-    	
-        power(forwardSpeed*speed - turnSpeed*speed,
-        	   forwardSpeed*speed - turnSpeed*speed,
-        	   forwardSpeed*speed + turnSpeed*speed,
-        	   forwardSpeed*speed + turnSpeed*speed);
+        power(forwardSpeed - turnSpeed,
+        	   forwardSpeed - turnSpeed,
+        	   forwardSpeed + turnSpeed,
+        	   forwardSpeed + turnSpeed);
         
     }
 
     public void tank (double leftSpeed, double rightSpeed) {
-        power(leftSpeed*speed, leftSpeed*speed, rightSpeed*speed, rightSpeed*speed);
+        power(leftSpeed, leftSpeed, rightSpeed, rightSpeed);
     }
     
     public double getLeftEncoder() {
@@ -187,9 +183,9 @@ public class DriveSubsystem extends Subsystem {
     public void setMotorDistance(double distance) {
     	setMotorsToDistance();
     	leftFrontPIDMotor.setSetpoint(distance);
-    	rightFrontPIDMotor.setSetpoint(distance);
+    	rightFrontPIDMotor.setSetpoint(-distance);
     	leftBackPIDMotor.setSetpoint(distance);
-    	rightBackPIDMotor.setSetpoint(distance);
+    	rightBackPIDMotor.setSetpoint(-distance);
     }
     
     public void setMotorSpeed(double speed) {
@@ -198,6 +194,24 @@ public class DriveSubsystem extends Subsystem {
     	rightFrontPIDMotor.setSetpoint(speed);
     	leftBackPIDMotor.setSetpoint(speed);
     	rightBackPIDMotor.setSetpoint(speed);
+    }
+    
+    public boolean isAllMotorsOnTarget() {
+    	return leftFrontPIDMotor.onTarget() && rightFrontPIDMotor.onTarget() && leftBackPIDMotor.onTarget() && rightBackPIDMotor.onTarget();
+    }
+    
+    public void startMotors() {
+    	leftFrontPIDMotor.start();
+    	rightFrontPIDMotor.start();
+    	leftBackPIDMotor.start();
+    	rightBackPIDMotor.start();
+    }
+    
+    public void stopMotors() {
+    	leftFrontPIDMotor.stop();
+    	rightFrontPIDMotor.stop();
+    	leftBackPIDMotor.stop();
+    	rightBackPIDMotor.stop();
     }
 }
 

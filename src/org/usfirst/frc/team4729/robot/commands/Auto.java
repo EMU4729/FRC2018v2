@@ -24,6 +24,8 @@ public class Auto extends CommandGroup {
 			side = Direction.RIGHT;
 		}
     	
+    	SmartDashboard.putString("Switch side", side.toString());
+    	
     	switch (autoType) {
     	case "l":
     		addSequential(new PathLeft(side));

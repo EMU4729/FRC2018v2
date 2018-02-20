@@ -24,19 +24,19 @@ public class PIDMotorController extends PIDSubsystem {
     // Initialize your subsystem here
 //    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
-    	super ("PIDDistance", 1.0, 0.0, 0.0);
-    	setAbsoluteTolerance (0.05);
+    	super ("PIDDistance", 1.0, 0.001, 0.0);
+    	setAbsoluteTolerance (0.1);
     	getPIDController().setContinuous(false);
     	
-    	this.motor = new PIDMotor(motor, encoder);
+    	this.motor = new PIDMotor(motor, encoder, isRightMotor);
     	this.motor.enable();
     	this.gyro = gyro;
     	this.isRightMotor = isRightMotor;
     	
     	mode = PIDDriveMode.SPEED;
     	
-    	setInputRange(-1, 1);
-    	setOutputRange(-1, 1);
+//    	setInputRange(-1, 1);
+//    	setOutputRange(-1, 1);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -74,7 +74,6 @@ public class PIDMotorController extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	SmartDashboard.putNumber("BLAH: ", getSetpoint());
     	switch (mode) {
 		case SPEED:
 			motor.setSetpoint(getSetpoint());
@@ -83,11 +82,11 @@ public class PIDMotorController extends PIDSubsystem {
 			motor.setSetpoint(output);
 			break;
 		case ANGLE:
-			if (isRightMotor) {
-				motor.setSetpoint(-output);
-			} else {
+//			if (isRightMotor) {
+//				motor.setSetpoint(-output);
+//			} else {
 				motor.setSetpoint(output);
-			}
+//			}
 			break;	
     	}
     }
@@ -102,6 +101,14 @@ public class PIDMotorController extends PIDSubsystem {
     
     public void useAngle() {
     	mode = PIDDriveMode.ANGLE;
+    }
+    
+    public void start() {
+    	motor.start();
+    }
+    
+    public void stop() {
+    	motor.stop();
     }
 }
 

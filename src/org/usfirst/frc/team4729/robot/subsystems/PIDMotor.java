@@ -16,17 +16,22 @@ public class PIDMotor extends PIDSubsystem {
 //	TalonSRX motor;
 	Talon motor;
 	Encoder encoder;
+	boolean isRightMotor;
+	double MAX_ENCODER_RATE = 2.5;
+	
+	boolean running = true;
 
     // Initialize your subsystem here
 //    public PIDMotor(TalonSRX motor, Encoder encoder) {
-    public PIDMotor(Talon motor, Encoder encoder) {
-    	super ("PIDMotor", 1.0, 0.0, 0.0);
-    	setAbsoluteTolerance (0.05);
+    public PIDMotor(Talon motor, Encoder encoder, boolean isRightMotor) {
+    	super ("PIDMotor", 0.5, 0.0001, 0.0);
+    	setAbsoluteTolerance (0.3);
     	getPIDController().setContinuous(false);
     	this.motor = motor;
     	this.encoder = encoder;
-    	setInputRange(-1, 1);
-    	setOutputRange(-1, 1);
+    	this.isRightMotor = isRightMotor;
+//    	setInputRange(-1, 1);
+//    	setOutputRange(-1, 1);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -44,8 +49,8 @@ public class PIDMotor extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-//    	System.out.println("The input is " + encoder.getRate() + " and the setpoint is " + getSetpoint());
-        return encoder.getRate();
+
+        return encoder.getRate() / MAX_ENCODER_RATE;
     }
     
     public double getPIDInput() {
@@ -57,12 +62,23 @@ public class PIDMotor extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
 //    	motor.set(ControlMode.PercentOutput, output);
-//    	System.out.println("The output is " + output);
-    	SmartDashboard.putNumber("output", output);
-    	motor.set(output);
+    	
+    	if (running) {
+    		motor.set(output);
+    	} else {
+    		motor.set(0);
+    	}
     }
     
     public double getDistance() {
     	return encoder.getDistance();
+    }
+    
+    public void start() {
+    	running = true;
+    }
+    
+    public void stop() {
+    	running = false;
     }
 }

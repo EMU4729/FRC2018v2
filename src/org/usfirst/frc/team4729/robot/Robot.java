@@ -56,8 +56,8 @@ public class Robot extends IterativeRobot {
 
 		autonomousSelector = new SendableChooser<String>();
 		autonomousSelector.addObject("Left", "l");
-		autonomousSelector.addDefault("Middle", "m");
-		autonomousSelector.addObject("Right", "r");
+		autonomousSelector.addObject("Middle", "m");
+		autonomousSelector.addDefault("Right", "r");
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick xbox = new Joystick(0);
@@ -103,7 +103,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		Robot.driveSubsystem.setMotorsToSpeed();
-
+		Robot.driveSubsystem.startMotors();
+		
 		driveType = (Command) driveModeSelector.getSelected();
 		/*
 		 * Joystick leftStick = new Joystick(0); Joystick rightStick = new Joystick(1);

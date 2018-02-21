@@ -24,8 +24,8 @@ public class PIDMotorController extends PIDSubsystem {
     // Initialize your subsystem here
 //    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
-    	super ("PIDDistance", 1.0, 0.001, 0.0);
-    	setAbsoluteTolerance (0.1);
+    	super ("PIDDistance", 1.0, 0.015, 0.6);
+    	setAbsoluteTolerance (0.01);
     	getPIDController().setContinuous(false);
     	
     	this.motor = new PIDMotor(motor, encoder, isRightMotor);
@@ -61,7 +61,7 @@ public class PIDMotorController extends PIDSubsystem {
 		case SPEED:
 			return 0;
 		case ANGLE:
-			return gyro.getAngle();
+			return 0;
     	}
 		return 0;
     }
@@ -85,7 +85,7 @@ public class PIDMotorController extends PIDSubsystem {
 //			if (isRightMotor) {
 //				motor.setSetpoint(-output);
 //			} else {
-				motor.setSetpoint(output);
+				motor.setSetpoint(getSetpoint());
 //			}
 			break;	
     	}
@@ -109,6 +109,10 @@ public class PIDMotorController extends PIDSubsystem {
     
     public void stop() {
     	motor.stop();
+    }
+    
+    public double getDistance() {
+    	return motor.getDistance();
     }
 }
 

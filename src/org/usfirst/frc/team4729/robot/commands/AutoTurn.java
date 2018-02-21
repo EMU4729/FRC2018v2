@@ -19,7 +19,7 @@ public class AutoTurn extends Command {
         // eg. requires(chassis);
     	degrees = deg;
     	direction = dir;
-    	if (dir == Direction.RIGHT) {
+    	if (dir == Direction.LEFT) {
     		degrees *= -1;
     	}
     }
@@ -27,18 +27,20 @@ public class AutoTurn extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.gyroSubsystem.resetGyro();
-    	Robot.driveSubsystem.setMotorAngle(degrees);
+    	Robot.driveSubsystem.setMotorsToAngle();
+    	Robot.driveSubsystem.startMotors();
     	System.out.println("Turnin");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveSubsystem.arcade(0, .6*Math.signum(degrees));
     	SmartDashboard.putNumber("Angle", Robot.gyroSubsystem.getGyroAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees) <= .5) {
+    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees) <= 5) {
             return true;
         } else {
             return false;
@@ -47,6 +49,7 @@ public class AutoTurn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveSubsystem.arcade(0, 0);
     	Robot.gyroSubsystem.resetGyro();
     	Robot.driveSubsystem.resetEncoders();
     }

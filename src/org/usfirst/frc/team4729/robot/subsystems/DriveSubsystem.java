@@ -101,11 +101,11 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getLeftEncoder() {
-    	return leftEncoder.getDistance();
+    	return leftFrontPIDMotor.getDistance();
     }
     
     public double getRightEncoder() {
-    	return rightEncoder.getDistance();
+    	return rightFrontPIDMotor.getDistance();
     }
     
     public double getLeftEncoderRate() {

@@ -23,6 +23,7 @@ public class AutoForwards extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.startMotors();
     	System.out.println("Moving for " + distance + " units!");
     }
 

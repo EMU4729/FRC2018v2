@@ -71,7 +71,7 @@ public class PIDMotor extends PIDSubsystem {
     }
     
     public double getDistance() {
-    	return encoder.getDistance();
+    	return encoder.getDistance()*(0.93/0.963);
     }
     
     public void start() {

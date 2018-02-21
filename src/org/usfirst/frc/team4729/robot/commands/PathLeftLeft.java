@@ -10,7 +10,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PathLeftLeft extends CommandGroup {
     public PathLeftLeft() {
     	addSequential(new AutoForwards(3.8155));
+    	addSequential(new StopMotors());
     	addSequential(new AutoTurn(90, Direction.RIGHT));
+    	addSequential(new StopMotors());
     	addSequential(new AutoForwards(0.53));
+    	addSequential(new StopMotors());
     }
 }

@@ -1,0 +1,116 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Switch side" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="Auto Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="11" y="153"/>
+	</widget>
+	<widget field="Drive Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="84"/>
+	</widget>
+</dashboard>
+<live-window>
+	<widget field="DriveSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="120"/>
+	</widget>
+	<widget field="PIDMotor" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PIDController" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="16"/>
+			<height>156</height>
+			<width>137</width>
+		</widget>
+		<location x="0" y="96"/>
+		<width>149</width>
+		<height>179</height>
+	</widget>
+	<widget field="GyroSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="72"/>
+	</widget>
+	<widget field="PIDDistance" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="PIDController" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="16"/>
+			<height>156</height>
+			<width>137</width>
+		</widget>
+		<location x="0" y="48"/>
+		<width>149</width>
+		<height>179</height>
+	</widget>
+	<widget field="WinchSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="24"/>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+			<location x="6" y="16"/>
+			<height>98</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[4]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="114"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[12]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="160"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+			<location x="6" y="206"/>
+			<height>150</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[1]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="356"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[3]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="402"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[11]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="448"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon[2]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="494"/>
+			<height>46</height>
+			<width>293</width>
+		</widget>
+		<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+			<location x="6" y="540"/>
+			<height>98</height>
+			<width>293</width>
+		</widget>
+		<location x="0" y="0"/>
+		<width>305</width>
+		<height>645</height>
+	</widget>
+</live-window>
+	<hidden field="Left motor output"/>
+	<hidden field="Speed"/>
+	<hidden field="leftStick"/>
+	<hidden field="Testing Endoders: Left"/>
+	<hidden field="inner output"/>
+	<hidden field="Right motor output"/>
+	<hidden field="counter"/>
+	<hidden field="Left PID input"/>
+	<hidden field="leftFront"/>
+	<hidden field="rightStick"/>
+	<hidden field="rightEncoder"/>
+	<hidden field="Testing Endoders: Right"/>
+	<hidden field="Right PID input"/>
+	<hidden field="BLAH: "/>
+	<hidden field="Left setpoint"/>
+	<hidden field="inner setpoint"/>
+	<hidden field="Desired"/>
+	<hidden field="leftEncoder"/>
+	<hidden field="Right setpoint"/>
+</xml>

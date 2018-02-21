@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class StopMotors extends Command {
-	float TOLERANCE = 0.01;
+	double TOLERANCE = 0.01;
 
     public StopMotors() {
         // Use requires() here to declare subsystem dependencies
@@ -26,7 +26,7 @@ public class StopMotors extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (Math.abs(Robot.driveSubsystem.getLeftEncoderRate()) < TOLERANCE && Math.abs(Robot.driveSubsystem.getLeftEncoderRate()) < TOLERANCE) {
+        if (Math.abs(Robot.driveSubsystem.getLeftEncoderRate()) < TOLERANCE && Math.abs(Robot.driveSubsystem.getRightEncoderRate()) < TOLERANCE) {
         	return true;
         } else {
         	return false;
@@ -41,5 +41,6 @@ public class StopMotors extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

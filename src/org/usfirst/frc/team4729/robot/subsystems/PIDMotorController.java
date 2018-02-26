@@ -24,7 +24,7 @@ public class PIDMotorController extends PIDSubsystem {
     // Initialize your subsystem here
 //    public PIDMotorController(TalonSRX motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
     public PIDMotorController(Talon motor, Encoder encoder, ADXRS450_Gyro gyro, boolean isRightMotor) {
-    	super ("PIDDistance", 1.0, 0.015, 0.6);
+    	super ("PIDDistance", 1.25, 0.002, 1.25);
     	setAbsoluteTolerance (0.01);
     	getPIDController().setContinuous(false);
     	
@@ -74,6 +74,8 @@ public class PIDMotorController extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
+    	SmartDashboard.putString("Mode: ", mode.toString());
+    	SmartDashboard.putNumber("Output", output/Math.abs(output));
     	switch (mode) {
 		case SPEED:
 			motor.setSetpoint(getSetpoint());

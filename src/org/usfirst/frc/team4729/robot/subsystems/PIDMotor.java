@@ -24,7 +24,7 @@ public class PIDMotor extends PIDSubsystem {
     // Initialize your subsystem here
 //    public PIDMotor(TalonSRX motor, Encoder encoder) {
     public PIDMotor(Talon motor, Encoder encoder, boolean isRightMotor) {
-    	super ("PIDMotor", 0.5, 0.0001, 0.0);
+    	super ("PIDMotor", 0.8, 0.001, 0.25);
     	setAbsoluteTolerance (0.3);
     	getPIDController().setContinuous(false);
     	this.motor = motor;

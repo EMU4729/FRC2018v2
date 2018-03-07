@@ -11,15 +11,10 @@ public class PathMiddleLeft extends CommandGroup {
 
     public PathMiddleLeft() {
         addSequential(new AutoForwards(0.4785));
-        addSequential(new StopMotors());
         addSequential(new AutoTurn(45, Direction.LEFT));
-        addSequential(new StopMotors());
         addSequential(new AutoForwards(2.114));
-        addSequential(new StopMotors());
         addSequential(new AutoTurn(45, Direction.RIGHT));
-        addSequential(new StopMotors());
         addSequential(new AutoForwards(0.6257));
-        addSequential(new StopMotors());
 //    	addSequential(new AutoForwards(1));
 //    	addSequential(new StopMotors());
     }

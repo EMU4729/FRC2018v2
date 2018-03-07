@@ -22,8 +22,7 @@ public class AutoForwards extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.resetEncoders();
-    	Robot.driveSubsystem.startMotors();
+    	Robot.driveSubsystem.reset();
     	System.out.println("Moving for " + distance + " units!");
     }
 
@@ -49,7 +48,7 @@ public class AutoForwards extends Command {
     	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2);
     	
     	Robot.gyroSubsystem.resetGyro();
-    	Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.reset();
     }
 
     // Called when another command which requires one or more of the same

@@ -36,6 +36,8 @@ public class DriveSubsystem extends Subsystem {
     double rightSpeed = 0;
     double turnSpeed = 0;
     double forwardSpeed = 0;
+    
+    double DRIVETHRESHOLD = 0.5;
 
     double acceleration = 0.05;
     
@@ -88,7 +90,10 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
-    public void arcade(double forwardSpeed, double turnSpeed) {  
+    public void arcade(double forwardSpeed, double turnSpeed) { 
+    	if (Math.abs(forwardSpeed) < DRIVETHRESHOLD && Math.abs(turnSpeed) < DRIVETHRESHOLD) {
+    		reset();
+    	}
         power(forwardSpeed - turnSpeed,
         	   forwardSpeed - turnSpeed,
         	   forwardSpeed + turnSpeed,
@@ -97,6 +102,9 @@ public class DriveSubsystem extends Subsystem {
     }
 
     public void tank (double leftSpeed, double rightSpeed) {
+    	if (Math.abs(forwardSpeed) < DRIVETHRESHOLD && Math.abs(turnSpeed) < DRIVETHRESHOLD) {
+    		reset();
+    	}
         power(leftSpeed, leftSpeed, rightSpeed, rightSpeed);
     }
     
@@ -114,6 +122,12 @@ public class DriveSubsystem extends Subsystem {
     
     public double getRightEncoderRate() {
     	return rightEncoder.getRate();
+    }
+    
+    public void reset() {
+    	resetEncoders();
+    	stopMotors();
+    	startMotors();
     }
     
     public void resetEncoders() {

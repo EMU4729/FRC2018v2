@@ -51,7 +51,7 @@ public class AutoTurn extends Command {
     protected void end() {
     	Robot.driveSubsystem.arcade(0, 0);
     	Robot.gyroSubsystem.resetGyro();
-    	Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.reset();
     }
 
     // Called when another command which requires one or more of the same

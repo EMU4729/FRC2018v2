@@ -111,6 +111,7 @@ public class PIDMotorController extends PIDSubsystem {
     
     public void stop() {
     	motor.stop();
+    	setSetpoint(0);
     }
     
     public double getDistance() {

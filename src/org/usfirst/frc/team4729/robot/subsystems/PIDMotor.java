@@ -80,5 +80,6 @@ public class PIDMotor extends PIDSubsystem {
     
     public void stop() {
     	running = false;
+    	setSetpoint(0);
     }
 }

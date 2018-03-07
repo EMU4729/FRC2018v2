@@ -37,7 +37,7 @@ public class DriveSubsystem extends Subsystem {
     double turnSpeed = 0;
     double forwardSpeed = 0;
     
-    double DRIVETHRESHOLD = 0.5;
+    double DRIVETHRESHOLD = 0.05;
 
     double acceleration = 0.05;
     
@@ -94,6 +94,15 @@ public class DriveSubsystem extends Subsystem {
     	if (Math.abs(forwardSpeed) < DRIVETHRESHOLD && Math.abs(turnSpeed) < DRIVETHRESHOLD) {
     		reset();
     	}
+    	
+    	
+    	SmartDashboard.putNumber("LeftPidMotorSetpoint", leftFrontPIDMotor.motor.getSetpoint());
+    	SmartDashboard.putNumber("ForwardSpeed", forwardSpeed);
+    	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
+    	
+    	
+    	
+    	
         power(forwardSpeed - turnSpeed,
         	   forwardSpeed - turnSpeed,
         	   forwardSpeed + turnSpeed,
@@ -125,7 +134,9 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void reset() {
-    	resetEncoders();
+    	leftEncoder.reset();
+    	rightEncoder.reset();
+//    	resetEncoders();
     	stopMotors();
     	startMotors();
     }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4729.robot.subsystems;
 
+import org.usfirst.frc.team4729.robot.Robot;
 import org.usfirst.frc.team4729.robot.enums.PIDDriveMode;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class PIDMotorController extends PIDSubsystem {
-	PIDMotor motor;
+	public PIDMotor motor;
 	ADXRS450_Gyro gyro;
 	PIDDriveMode mode;
 	boolean isRightMotor;
@@ -75,7 +76,8 @@ public class PIDMotorController extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	SmartDashboard.putString("Mode: ", mode.toString());
-    	SmartDashboard.putNumber("Output", output/Math.abs(output));
+    	SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getLeftEncoder());
+    	SmartDashboard.putNumber("Right Encoder" , Robot.driveSubsystem.getRightEncoder());
     	switch (mode) {
 		case SPEED:
 			motor.setSetpoint(getSetpoint());

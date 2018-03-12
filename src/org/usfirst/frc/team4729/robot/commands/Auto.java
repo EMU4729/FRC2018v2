@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto extends CommandGroup {
 
     public Auto(String autoType) {
-    	Robot.driveSubsystem.setMotorsToDistance();
-    	Robot.driveSubsystem.enable();
+//    	Robot.driveSubsystem.setMotorsToDistance();
+//    	Robot.driveSubsystem.enable();
     	
     	Direction side = Direction.LEFT; // A default in case something goes not good
     	

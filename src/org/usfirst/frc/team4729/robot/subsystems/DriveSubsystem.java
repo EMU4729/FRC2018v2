@@ -31,20 +31,13 @@ public class DriveSubsystem extends Subsystem {
     
     double circumferenceOfWheels = 0.1016;
     double pulsesPerRevolution = 2048;
-
-    double leftSpeed = 0;
-    double rightSpeed = 0;
-    double turnSpeed = 0;
-    double forwardSpeed = 0;
     
-    double DRIVETHRESHOLD = 0.05;
+    double DRIVE_THRESHOLD = 0.1;
+    double POWER_MAX = 0.5;
+    double POWER_MIN = 0.15;
+    double TURN_FACTOR = 0.85;
 
     double acceleration = 0.05;
-    
-    PIDMotorController leftFrontPIDMotor;
-	PIDMotorController rightFrontPIDMotor;
-	PIDMotorController leftBackPIDMotor;
-	PIDMotorController rightBackPIDMotor;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -60,29 +53,7 @@ public class DriveSubsystem extends Subsystem {
     	rightBackDrive = new Talon(RobotMap.MOTOR_RIGHT_BACK);
     	
 //    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, En);
-    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, false, Encoder.EncodingType.k4X);
-
-    	leftEncoder.setMaxPeriod(0.1);
-    	leftEncoder.setMinRate(10);
-    	leftEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
-    	leftEncoder.setSamplesToAverage(7);
-    	leftEncoder.setReverseDirection(true);
-    	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false, Encoder.EncodingType.k4X);
-    	rightEncoder.setMaxPeriod(0.1);
-    	rightEncoder.setMinRate(10);
-    	rightEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
-    	rightEncoder.setSamplesToAverage(7);
-    	rightEncoder.setReverseDirection(false);
-    	
-    	leftFrontPIDMotor = new PIDMotorController(leftFrontDrive, leftEncoder, Robot.gyroSubsystem.getGyro(), false);
-    	rightFrontPIDMotor = new PIDMotorController(rightFrontDrive, rightEncoder, Robot.gyroSubsystem.getGyro(), true);
-    	leftBackPIDMotor = new PIDMotorController(leftBackDrive, leftEncoder, Robot.gyroSubsystem.getGyro(), false);
-    	rightBackPIDMotor = new PIDMotorController(rightBackDrive, rightEncoder, Robot.gyroSubsystem.getGyro(), true);
-    	
-    	leftFrontPIDMotor.enable();
-    	leftBackPIDMotor.enable();
-    	rightFrontPIDMotor.enable();
-    	rightBackPIDMotor.enable();
+    	createEncoders();
     }
 
     public void initDefaultCommand() {
@@ -90,39 +61,44 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
-    public void arcade(double forwardSpeed, double turnSpeed) { 
-    	if (Math.abs(forwardSpeed) < DRIVETHRESHOLD && Math.abs(turnSpeed) < DRIVETHRESHOLD) {
-    		reset();
+    public void arcade(double forwardSpeed, double turnSpeed) {
+    	if (Math.abs(forwardSpeed) < DRIVE_THRESHOLD) {
+    		forwardSpeed = 0;
     	}
+    	if (Math.abs(turnSpeed) < DRIVE_THRESHOLD) {
+    		turnSpeed = 0;
+    	}
+    	turnSpeed *= TURN_FACTOR;
+    	power(forwardSpeed - turnSpeed,
+    	      forwardSpeed - turnSpeed,
+    	      forwardSpeed + turnSpeed,
+    	      forwardSpeed + turnSpeed);
     	
-    	
-    	SmartDashboard.putNumber("LeftPidMotorSetpoint", leftFrontPIDMotor.motor.getSetpoint());
+//    	SmartDashboard.putNumber("LeftPidMotorSetpoint", leftFrontPIDMotor.motor.getSetpoint());
+//    	SmartDashboard.putNumber("RightPidMotorSetpoint", rightFrontPIDMotor.motor.getSetpoint());
     	SmartDashboard.putNumber("ForwardSpeed", forwardSpeed);
     	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
-    	
-    	
-    	
-    	
-        power(forwardSpeed - turnSpeed,
-        	   forwardSpeed - turnSpeed,
-        	   forwardSpeed + turnSpeed,
-        	   forwardSpeed + turnSpeed);
+//    	SmartDashboard.putNumber("Left output", leftFrontPIDMotor.motor.output);
+//    	SmartDashboard.putNumber("Right output", rightFrontPIDMotor.motor.output);
         
     }
 
     public void tank (double leftSpeed, double rightSpeed) {
-    	if (Math.abs(forwardSpeed) < DRIVETHRESHOLD && Math.abs(turnSpeed) < DRIVETHRESHOLD) {
-    		reset();
+    	if (Math.abs(leftSpeed) < DRIVE_THRESHOLD) {
+    		leftSpeed = 0;
     	}
-        power(leftSpeed, leftSpeed, rightSpeed, rightSpeed);
+    	if (Math.abs(rightSpeed) < DRIVE_THRESHOLD) {
+    		rightSpeed = 0;
+    	}
+    	power(leftSpeed, leftSpeed, rightSpeed, rightSpeed);
     }
     
     public double getLeftEncoder() {
-    	return leftFrontPIDMotor.getDistance();
+    	return leftEncoder.getDistance();
     }
     
     public double getRightEncoder() {
-    	return rightFrontPIDMotor.getDistance();
+    	return rightEncoder.getDistance();
     }
     
     public double getLeftEncoderRate() {
@@ -137,8 +113,6 @@ public class DriveSubsystem extends Subsystem {
     	leftEncoder.reset();
     	rightEncoder.reset();
 //    	resetEncoders();
-    	stopMotors();
-    	startMotors();
     }
     
     public void resetEncoders() {
@@ -146,97 +120,48 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.reset();
     }
     
+    public void createEncoders() {
+    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, false, Encoder.EncodingType.k4X);
+    	leftEncoder.setMaxPeriod(0.1);
+    	leftEncoder.setMinRate(10);
+    	leftEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
+    	leftEncoder.setSamplesToAverage(7);
+    	leftEncoder.setReverseDirection(true);
+    	
+    	rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false, Encoder.EncodingType.k4X);
+    	rightEncoder.setMaxPeriod(0.1);
+    	rightEncoder.setMinRate(10);
+    	rightEncoder.setDistancePerPulse(Math.PI * circumferenceOfWheels/pulsesPerRevolution);
+    	rightEncoder.setSamplesToAverage(7);
+    	rightEncoder.setReverseDirection(false);
+    }
+    
+    public void freeEncoders() {
+    	if (leftEncoder != null) {
+    		leftEncoder.free();
+    	}
+    	
+    	if (rightEncoder != null) {
+    		rightEncoder.free();
+    	}
+    	
+    	createEncoders();
+    }
+    
     int counter = 0;
     
     public void power(double leftFront, double leftBack, double rightFront, double rightBack) {
-    	SmartDashboard.putNumber("counter", counter);
-    	counter++;
-    	SmartDashboard.putNumber("leftFront", leftFront);
-    	leftFrontPIDMotor.setSetpoint(-leftFront);
-    	rightFrontPIDMotor.setSetpoint(rightFront);
-    	leftBackPIDMotor.setSetpoint(-leftBack);
-    	rightBackPIDMotor.setSetpoint(rightBack);
+//    	SmartDashboard.putNumber("counter", counter);
+//    	counter++;
+//    	SmartDashboard.putNumber("leftFront", leftFront);
+		leftFrontDrive.set(leftFront == 0 ? 0 : -leftFront * (POWER_MAX - POWER_MIN) - (Math.abs(leftFront) / leftFront) * POWER_MIN);
+		rightFrontDrive.set(rightFront == 0 ? 0 : rightFront * (POWER_MAX - POWER_MIN) + (Math.abs(rightFront) / rightFront) * POWER_MIN);
+		leftBackDrive.set(leftBack == 0 ? 0 : -leftBack * (POWER_MAX - POWER_MIN) - (Math.abs(leftBack) / leftBack) * POWER_MIN);
+		rightBackDrive.set(rightBack == 0 ? 0 : rightBack * (POWER_MAX - POWER_MIN) + (Math.abs(rightBack) / rightBack) * POWER_MIN);
     }
     
     public Encoder[] getEncoders() {
 		return new Encoder[] {leftEncoder, rightEncoder};
-    }
-    
-    public void enable() {
-    	leftFrontPIDMotor.enable();
-    	rightFrontPIDMotor.enable();
-    	leftBackPIDMotor.enable();
-    	rightBackPIDMotor.enable();
-    }
-    
-    public void disable() {
-    	leftFrontPIDMotor.disable();
-    	rightFrontPIDMotor.disable();
-    	leftBackPIDMotor.disable();
-    	rightBackPIDMotor.disable();
-    }
-    
-    public void setMotorsToSpeed() {
-    	leftFrontPIDMotor.useSpeed();
-    	rightFrontPIDMotor.useSpeed();
-    	leftBackPIDMotor.useSpeed();
-    	rightBackPIDMotor.useSpeed();
-    }
-    
-    public void setMotorsToDistance() {
-    	leftFrontPIDMotor.useDistance();
-    	rightFrontPIDMotor.useDistance();
-    	leftBackPIDMotor.useDistance();
-    	rightBackPIDMotor.useDistance();
-    }
-    
-    public void setMotorsToAngle() {
-    	leftFrontPIDMotor.useAngle();
-    	rightFrontPIDMotor.useAngle();
-    	leftBackPIDMotor.useAngle();
-    	rightBackPIDMotor.useAngle();
-    }
-    
-    public void setMotorAngle(double angle) {
-    	setMotorsToAngle();
-    	leftFrontPIDMotor.setSetpoint(angle);
-    	rightFrontPIDMotor.setSetpoint(angle);
-    	leftBackPIDMotor.setSetpoint(angle);
-    	rightBackPIDMotor.setSetpoint(angle);
-    }
-    
-    public void setMotorDistance(double distance) {
-    	setMotorsToDistance();
-    	leftFrontPIDMotor.setSetpoint(distance);
-    	rightFrontPIDMotor.setSetpoint(-distance);
-    	leftBackPIDMotor.setSetpoint(distance);
-    	rightBackPIDMotor.setSetpoint(-distance);
-    }
-    
-    public void setMotorSpeed(double speed) {
-    	setMotorsToSpeed();
-    	leftFrontPIDMotor.setSetpoint(speed);
-    	rightFrontPIDMotor.setSetpoint(speed);
-    	leftBackPIDMotor.setSetpoint(speed);
-    	rightBackPIDMotor.setSetpoint(speed);
-    }
-    
-    public boolean isAllMotorsOnTarget() {
-    	return leftFrontPIDMotor.onTarget() && rightFrontPIDMotor.onTarget() && leftBackPIDMotor.onTarget() && rightBackPIDMotor.onTarget();
-    }
-    
-    public void startMotors() {
-    	leftFrontPIDMotor.start();
-    	rightFrontPIDMotor.start();
-    	leftBackPIDMotor.start();
-    	rightBackPIDMotor.start();
-    }
-    
-    public void stopMotors() {
-    	leftFrontPIDMotor.stop();
-    	rightFrontPIDMotor.stop();
-    	leftBackPIDMotor.stop();
-    	rightBackPIDMotor.stop();
     }
 }
 

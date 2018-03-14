@@ -32,7 +32,7 @@ public class DriveSubsystem extends Subsystem {
     double circumferenceOfWheels = 0.1016 * 2 /* for testing */;
     double pulsesPerRevolution = 2048;
     
-    double DRIVE_THRESHOLD = 0.1;
+    double DRIVE_THRESHOLD = 0.05;
     double POWER_MAX = 0.5;
     double POWER_MIN = 0.15;
     double TURN_FACTOR = 0.85;
@@ -80,6 +80,8 @@ public class DriveSubsystem extends Subsystem {
     	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
 //    	SmartDashboard.putNumber("Left output", leftFrontPIDMotor.motor.output);
 //    	SmartDashboard.putNumber("Right output", rightFrontPIDMotor.motor.output);
+    	SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
+    	SmartDashboard.putNumber("Right Encoder", getRightEncoder());
         
     }
 
@@ -94,7 +96,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getLeftEncoder() {
-    	return leftEncoder.getRaw();
+    	return leftEncoder.getDistance();
     }
     
     public double getRightEncoder() {

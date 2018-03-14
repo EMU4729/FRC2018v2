@@ -33,13 +33,14 @@ public class AutoTurn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.arcade(0, Math.signum(degrees));
+    	double speed = Math.max(0.06, Math.abs(((degrees-Robot.gyroSubsystem.getGyroAngle())/degrees))); //0.06 = minimum speed
+    	Robot.driveSubsystem.arcade(0, Math.signum(degrees)*speed);
     	SmartDashboard.putNumber("Angle", Robot.gyroSubsystem.getGyroAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees) <= 5) {
+    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 <= 5 || Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 >= 355) {
             return true;
         } else {
             return false;

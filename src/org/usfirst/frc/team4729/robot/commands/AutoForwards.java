@@ -18,6 +18,7 @@ public class AutoForwards extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		distance = d;
+		counter = 0;
     }
 
     // Called just before this Command runs the first time
@@ -28,16 +29,18 @@ public class AutoForwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	counter++;
     	Robot.driveSubsystem.arcade(-1, 0);
 //    	Robot.driveSubsystem.setMotorDistance(distance);
-    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2);
-    	SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getLeftEncoderRate());
-    	SmartDashboard.putNumber("Right Encoder", Robot.driveSubsystem.getRightEncoderRate());
+    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder()) / 2);
+//    	SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getLeftEncoder());
+//    	SmartDashboard.putNumber("Right Encoder", Robot.driveSubsystem.getRightEncoder());
+    	SmartDashboard.putNumber("Counter", counter);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2 >= distance) {
+    	if (Math.abs(Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder()) / 2 >= distance) {
             return true;
         } else {
             return false;

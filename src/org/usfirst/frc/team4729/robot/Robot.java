@@ -55,9 +55,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		autonomousSelector = new SendableChooser<String>();
-		autonomousSelector.addDefault("Left", "l");
+		autonomousSelector.addObject("Left", "l");
 		autonomousSelector.addObject("Middle", "m");
-		autonomousSelector.addObject("Right", "r");
+		autonomousSelector.addDefault("Right", "r");
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick xbox = new Joystick(0);

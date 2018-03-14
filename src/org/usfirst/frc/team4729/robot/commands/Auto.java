@@ -13,7 +13,7 @@ public class Auto extends CommandGroup {
     public Auto(String autoType) {
 //    	Robot.driveSubsystem.setMotorsToDistance();
 //    	Robot.driveSubsystem.enable();
-    	Robot.driveSubsystem.resetEncoders();
+    	
     	Direction side = Direction.LEFT; // A default in case something goes not good
     	
     	String gameData;

@@ -29,7 +29,7 @@ public class DriveSubsystem extends Subsystem {
     Encoder leftEncoder;
     Encoder rightEncoder;
     
-    double circumferenceOfWheels = 0.1016 * 2 /* for testing */;
+    double circumferenceOfWheels = 0.1016;
     double pulsesPerRevolution = 2048;
     
     double DRIVE_THRESHOLD = 0.1;
@@ -94,7 +94,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getLeftEncoder() {
-    	return leftEncoder.getRaw();
+    	return leftEncoder.getDistance();
     }
     
     public double getRightEncoder() {

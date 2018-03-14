@@ -28,14 +28,16 @@ public class AutoForwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.arcade(1, 0);
+    	Robot.driveSubsystem.arcade(-1, 0);
 //    	Robot.driveSubsystem.setMotorDistance(distance);
-//    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2);
+    	SmartDashboard.putNumber("Distance", (Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2);
+    	SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getLeftEncoderRate());
+    	SmartDashboard.putNumber("Right Encoder", Robot.driveSubsystem.getRightEncoderRate());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if ((Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2 >= distance) {
+    	if (Math.abs(Robot.driveSubsystem.getLeftEncoder() - Robot.driveSubsystem.getRightEncoder()) / 2 >= distance) {
             return true;
         } else {
             return false;

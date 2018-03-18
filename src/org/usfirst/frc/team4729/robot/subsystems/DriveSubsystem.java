@@ -16,24 +16,25 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  *
  */
 public class DriveSubsystem extends Subsystem {
-//    TalonSRX leftFrontDrive;
-//    TalonSRX leftBackDrive;
-//    TalonSRX rightFrontDrive;
-//    TalonSRX rightBackDrive;
+    TalonSRX leftFrontDrive;
+    TalonSRX leftBackDrive;
+    TalonSRX rightFrontDrive;
+    TalonSRX rightBackDrive;
 	
-	Talon leftFrontDrive;
-	Talon leftBackDrive;
-	Talon rightFrontDrive;
-	Talon rightBackDrive;
+//	Talon leftFrontDrive;
+//	Talon leftBackDrive;
+//	Talon rightFrontDrive;
+//	Talon rightBackDrive;
     
     Encoder leftEncoder;
     Encoder rightEncoder;
     
-    double circumferenceOfWheels = 0.1016 * 2 /* for testing */;
+    double circumferenceOfWheels = 0.1016;
     double pulsesPerRevolution = 2048;
     
     double DRIVE_THRESHOLD = 0.05;
-    double POWER_MAX = 0.5;
+    double POWER_MAX = 1;
+    double speedMultiplier = 0.75;
     double POWER_MIN = 0.15;
     double TURN_FACTOR = 0.85;
 
@@ -42,15 +43,15 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
     
     public DriveSubsystem() {
-//    	leftFrontDrive = new TalonSRX(RobotMap.MOTOR_LEFT_FRONT);
-//    	leftBackDrive = new TalonSRX(RobotMap.MOTOR_LEFT_BACK);
-//    	rightFrontDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_FRONT);
-//    	rightBackDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_BACK);
+    	leftFrontDrive = new TalonSRX(RobotMap.MOTOR_LEFT_FRONT);
+    	leftBackDrive = new TalonSRX(RobotMap.MOTOR_LEFT_BACK);
+    	rightFrontDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_FRONT);
+    	rightBackDrive = new TalonSRX(RobotMap.MOTOR_RIGHT_BACK);
     	
-    	leftFrontDrive = new Talon(RobotMap.MOTOR_LEFT_FRONT);
-    	leftBackDrive = new Talon(RobotMap.MOTOR_LEFT_BACK);
-    	rightFrontDrive = new Talon(RobotMap.MOTOR_RIGHT_FRONT);
-    	rightBackDrive = new Talon(RobotMap.MOTOR_RIGHT_BACK);
+//    	leftFrontDrive = new Talon(RobotMap.MOTOR_LEFT_FRONT);
+//    	leftBackDrive = new Talon(RobotMap.MOTOR_LEFT_BACK);
+//    	rightFrontDrive = new Talon(RobotMap.MOTOR_RIGHT_FRONT);
+//    	rightBackDrive = new Talon(RobotMap.MOTOR_RIGHT_BACK);
     	
 //    	leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, En);
     	createEncoders();
@@ -76,12 +77,12 @@ public class DriveSubsystem extends Subsystem {
     	
 //    	SmartDashboard.putNumber("LeftPidMotorSetpoint", leftFrontPIDMotor.motor.getSetpoint());
 //    	SmartDashboard.putNumber("RightPidMotorSetpoint", rightFrontPIDMotor.motor.getSetpoint());
-    	SmartDashboard.putNumber("ForwardSpeed", forwardSpeed);
-    	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
+//    	SmartDashboard.putNumber("ForwardSpeed", forwardSpeed);
+//    	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
 //    	SmartDashboard.putNumber("Left output", leftFrontPIDMotor.motor.output);
 //    	SmartDashboard.putNumber("Right output", rightFrontPIDMotor.motor.output);
-    	SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
-    	SmartDashboard.putNumber("Right Encoder", getRightEncoder());
+//    	SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
+//    	SmartDashboard.putNumber("Right Encoder", getRightEncoder());
         
     }
 
@@ -153,17 +154,29 @@ public class DriveSubsystem extends Subsystem {
     int counter = 0;
     
     public void power(double leftFront, double leftBack, double rightFront, double rightBack) {
+    	leftFront *= speedMultiplier;
+    	leftBack *= speedMultiplier;
+    	rightFront *= speedMultiplier;
+    	rightBack *= speedMultiplier;
 //    	SmartDashboard.putNumber("counter", counter);
 //    	counter++;
 //    	SmartDashboard.putNumber("leftFront", leftFront);
-		leftFrontDrive.set(leftFront == 0 ? 0 : -leftFront * (POWER_MAX - POWER_MIN) - (Math.abs(leftFront) / leftFront) * POWER_MIN);
-		rightFrontDrive.set(rightFront == 0 ? 0 : rightFront * (POWER_MAX - POWER_MIN) + (Math.abs(rightFront) / rightFront) * POWER_MIN);
-		leftBackDrive.set(leftBack == 0 ? 0 : -leftBack * (POWER_MAX - POWER_MIN) - (Math.abs(leftBack) / leftBack) * POWER_MIN);
-		rightBackDrive.set(rightBack == 0 ? 0 : rightBack * (POWER_MAX - POWER_MIN) + (Math.abs(rightBack) / rightBack) * POWER_MIN);
+		leftFrontDrive.set(ControlMode.PercentOutput, leftFront == 0 ? 0 : -leftFront * (POWER_MAX - POWER_MIN) - (Math.abs(leftFront) / leftFront) * POWER_MIN);
+		rightFrontDrive.set(ControlMode.PercentOutput, rightFront == 0 ? 0 : rightFront * (POWER_MAX - POWER_MIN) + (Math.abs(rightFront) / rightFront) * POWER_MIN);
+		leftBackDrive.set(ControlMode.PercentOutput, leftBack == 0 ? 0 : -leftBack * (POWER_MAX - POWER_MIN) - (Math.abs(leftBack) / leftBack) * POWER_MIN);
+		rightBackDrive.set(ControlMode.PercentOutput, rightBack == 0 ? 0 : rightBack * (POWER_MAX - POWER_MIN) + (Math.abs(rightBack) / rightBack) * POWER_MIN);
     }
     
     public Encoder[] getEncoders() {
 		return new Encoder[] {leftEncoder, rightEncoder};
+    }
+    
+    public void highSpeed() {
+    	speedMultiplier = 0.75;
+    }
+    
+    public void lowSpeed() {
+    	speedMultiplier = 0.5;
     }
 }
 

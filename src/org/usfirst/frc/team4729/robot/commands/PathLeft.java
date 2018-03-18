@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class PathLeft extends CommandGroup {
     public PathLeft(Direction side) {
-        switch (side) {
-        case LEFT:
-        	addSequential(new PathLeftLeft());
-        	break;
-        case RIGHT:
-        	addSequential(new PathLeftRight());
-        	break;
-        }
+//        switch (side) {
+//        case LEFT:
+//        	break;
+//        case RIGHT:
+//        	addSequential(new PathLeftRight());
+//        	break;
+//        }
+    	
+    	addSequential(new PathLeftLeft(side));
     }
 }

@@ -15,8 +15,11 @@ import org.usfirst.frc.team4729.robot.commands.MoveForwards;
 import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
+import org.usfirst.frc.team4729.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.Flaps;
 import org.usfirst.frc.team4729.robot.subsystems.GyroSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.LED;
 //import org.usfirst.frc.team4729.robot.subsystems.PneumaticsSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.WinchSubsystem;
 
@@ -31,7 +34,9 @@ public class Robot extends IterativeRobot {
 	public static GyroSubsystem gyroSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static WinchSubsystem winchSubsystem;
-//	public static PneumaticsSubsystem pneumaticsSubsystem;
+	public static CubeSubsystem cubeSubsystem;
+	public static LED ledSubsystem;
+	public static Flaps flaps;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -51,13 +56,18 @@ public class Robot extends IterativeRobot {
 		gyroSubsystem = new GyroSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		winchSubsystem = new WinchSubsystem();
-//		pneumaticsSubsystem = new PneumaticsSubsystem();
+		cubeSubsystem = new CubeSubsystem();
+		ledSubsystem = new LED();
+		flaps = new Flaps();
 		oi = new OI();
+		
+		ledSubsystem.stop();
 
 		autonomousSelector = new SendableChooser<String>();
-		autonomousSelector.addDefault("Left", "l");
+		autonomousSelector.addObject("Left", "l");
 		autonomousSelector.addObject("Middle", "m");
 		autonomousSelector.addObject("Right", "r");
+		autonomousSelector.addDefault("Simple (forwards)", "f");
 		SmartDashboard.putData("Auto Type", autonomousSelector);
 
 		Joystick xbox = new Joystick(0);
@@ -65,6 +75,8 @@ public class Robot extends IterativeRobot {
 		driveModeSelector.addDefault("Two Stick Arcade", new TwoStickArcade(xbox));
 		driveModeSelector.addObject("Two Stick Tank", new TwoStickTank(xbox));
 		SmartDashboard.putData("Drive Type", driveModeSelector);
+		
+		
 
 		new Thread(() -> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -100,6 +112,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		Robot.driveSubsystem.reset();
 		Robot.gyroSubsystem.resetGyro();
+		Robot.driveSubsystem.highSpeed();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 //		Robot.driveSubsystem.setMotorsToSpeed();

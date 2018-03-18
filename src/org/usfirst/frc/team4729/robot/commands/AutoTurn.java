@@ -17,7 +17,7 @@ public class AutoTurn extends Command {
     public AutoTurn(double deg, Direction dir) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	degrees = deg;
+    	degrees = deg; // Reverses turning direction
     	direction = dir;
     	if (dir == Direction.LEFT) {
     		degrees *= -1;
@@ -33,14 +33,14 @@ public class AutoTurn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = Math.max(0.06, Math.abs(((degrees-Robot.gyroSubsystem.getGyroAngle())/degrees))); //0.06 = minimum speed
+    	double speed = Math.max(0.3, Math.abs(((degrees-Robot.gyroSubsystem.getGyroAngle())/degrees))); //0.3 = minimum speed
     	Robot.driveSubsystem.arcade(0, Math.signum(degrees)*speed);
-    	SmartDashboard.putNumber("Angle", Robot.gyroSubsystem.getGyroAngle());
+//    	SmartDashboard.putNumber("Angle", Robot.gyroSubsystem.getGyroAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 <= 5 || Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 >= 355) {
+    	if (Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 <= 10 || Math.abs(Robot.gyroSubsystem.getGyroAngle() - degrees)%360 >= 350) {
             return true;
         } else {
             return false;

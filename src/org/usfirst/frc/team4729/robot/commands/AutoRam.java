@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoForwards extends Command {
+public class AutoRam extends Command {
 
 	double distance;
 //	Timer timer;
 //	double time;
 	
-    public AutoForwards(double d) {
+    public AutoRam(double d) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		distance = d / 2;
@@ -33,8 +33,8 @@ public class AutoForwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = Math.max(0.4, distance-Math.abs(Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2)/distance; //0.06 = minimum speed
-    	Robot.driveSubsystem.arcade(speed, 0); // Moves backwards
+//    	double speed = Math.max(0.4, distance-Math.abs(Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder())/2)/distance; //0.06 = minimum speed
+    	Robot.driveSubsystem.arcade(1, 0); // Moves backwards
 //    	SmartDashboard.putNumber("dist", Math.abs(Robot.driveSubsystem.getLeftEncoder() + Robot.driveSubsystem.getRightEncoder()) / 2);
 //    	Robot.driveSubsystem.arcade(1, 0);
     }

@@ -13,6 +13,7 @@ public class Auto extends CommandGroup {
     public Auto(String autoType) {
 //    	Robot.driveSubsystem.setMotorsToDistance();
 //    	Robot.driveSubsystem.enable();
+    	Robot.driveSubsystem.lowSpeed();
     	Robot.driveSubsystem.resetEncoders();
     	Direction side = Direction.LEFT; // A default in case something goes not good
     	
@@ -31,12 +32,16 @@ public class Auto extends CommandGroup {
     		addSequential(new PathLeft(side));
     		break;
     	case "m":
-    		addSequential(new PathMiddle(side));
+//    		addSequential(new PathMiddle(side));
+//    		addSequential(new AutoEjectCube());
+    		addSequential(new PathForwards());
     		break;
     	case "r":
-    		System.out.println("Right position");
     		addSequential(new PathRight(side));
     		break;
+    	case "f":
+    	default:
+    		addSequential(new PathForwards());
 	    }
     	
     	super.initialize();

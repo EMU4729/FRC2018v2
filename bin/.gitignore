@@ -1,8 +1,3 @@
 
 *.class
 *.class
-/.gitignore
-/.gitignore.txt
-/dist/
-/org/
-/build/
